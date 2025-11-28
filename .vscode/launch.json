@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-WeblolApplication<web>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "web.lol.web.WeblolApplication",
+            "projectName": "web",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

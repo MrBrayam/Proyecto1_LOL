@@ -25,10 +25,10 @@
                         <!-- Iteramos sobre los campeones de esa letra -->
                         <div th:each="campeon : ${entry.value}" class="campeon-card">
                             <img th:src="@{${campeon.imagenPath}}" 
-                                 th:alt="${campeon.nombre}" 
+                                 th:alt="${campeon.nombreCampeon}" 
                                  class="campeon-img">
-                            <h3 th:text="${campeon.nombre}">Nombre del Campeón</h3>
-                            <p th:text="${campeon.titulo}">Título del Campeón</p>
+                            <h3 th:text="${campeon.nombreCampeon}">Nombre del Campeón</h3>
+                            <p th:text="${campeon.descripcionCampeon}">Descripción del Campeón</p>
                         </div>
                     </div>
                 </div>
