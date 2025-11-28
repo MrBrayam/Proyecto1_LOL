@@ -15,24 +15,43 @@ public class CampeonService {
     private CampeonRepository campeonRepository;
     
     public List<Campeon> obtenerTodosCampeones() {
-        List<Campeon> campeones = campeonRepository.findByEstadoTrueOrderByNombreCampeon();
-        // Asignar rutas de imagen y letra basado en el nombre
-        campeones.forEach(this::asignarDatosAdicionales);
-        return campeones;
+        try {
+            List<Campeon> campeones = campeonRepository.findAllByOrderByNombreCampeon();
+            System.out.println("Campeones obtenidos de la BD: " + campeones.size());
+            
+            // Asignar rutas de imagen y letra basado en el nombre
+            campeones.forEach(this::asignarDatosAdicionales);
+            return campeones;
+        } catch (Exception e) {
+            System.err.println("Error al obtener campeones: " + e.getMessage());
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
     }
     
     public Map<String, List<Campeon>> obtenerCampeonesPorLetra() {
-        List<Campeon> campeones = obtenerTodosCampeones();
-        return campeones.stream()
-                .collect(Collectors.groupingBy(
-                    campeon -> campeon.getNombreCampeon().substring(0, 1).toUpperCase(),
-                    TreeMap::new, 
-                    Collectors.toList()
-                ));
+        try {
+            List<Campeon> campeones = obtenerTodosCampeones();
+            System.out.println("Procesando " + campeones.size() + " campeones para agrupar por letra");
+            
+            Map<String, List<Campeon>> resultado = campeones.stream()
+                    .collect(Collectors.groupingBy(
+                        campeon -> campeon.getNombreCampeon().substring(0, 1).toUpperCase(),
+                        TreeMap::new, 
+                        Collectors.toList()
+                    ));
+                    
+            System.out.println("Grupos creados: " + resultado.keySet());
+            return resultado;
+        } catch (Exception e) {
+            System.err.println("Error al agrupar campeones por letra: " + e.getMessage());
+            e.printStackTrace();
+            return new TreeMap<>();
+        }
     }
     
     public List<Campeon> buscarCampeonesPorNombre(String nombre) {
-        List<Campeon> campeones = campeonRepository.findByNombreCampeonContainingIgnoreCaseAndEstadoTrue(nombre);
+        List<Campeon> campeones = campeonRepository.findByNombreCampeonContainingIgnoreCase(nombre);
         campeones.forEach(this::asignarDatosAdicionales);
         return campeones;
     }

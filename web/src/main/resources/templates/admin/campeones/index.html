@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Administrar Campeones - League of Legends</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/normalize.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/base.css}">
+    <style>
+        .admin-container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+        .admin-table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+        .admin-table th, .admin-table td { padding: 0.75rem; border: 1px solid #ddd; text-align: left; }
+        .admin-table th { background-color: #f4f4f4; }
+        .btn { padding: 0.5rem 1rem; margin: 0.25rem; text-decoration: none; border-radius: 4px; display: inline-block; }
+        .btn-primary { background: #007bff; color: white; }
+        .btn-warning { background: #ffc107; color: black; }
+        .btn-danger { background: #dc3545; color: white; }
+        .btn:hover { opacity: 0.8; }
+    </style>
+</head>
+<body>
+    <div th:replace="~{fragments/header :: header}"></div>
+
+    <main>
+        <div class="admin-container">
+            <h1>Administrar Campeones</h1>
+            
+            <div style="margin-bottom: 1rem;">
+                <a th:href="@{/admin/campeones/form}" class="btn btn-primary">Agregar Nuevo Campeón</a>
+                <a th:href="@{/}" class="btn" style="background: #6c757d; color: white;">Volver al Sitio</a>
+            </div>
+
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="campeon : ${campeones}">
+                        <td th:text="${campeon.idCampeon}">ID</td>
+                        <td th:text="${campeon.nombreCampeon}">Nombre</td>
+                        <td th:text="${campeon.descripcionCampeon}">Descripción</td>
+                        <td>
+                            <span th:if="${campeon.estado == 1}" style="color: green;">Activo</span>
+                            <span th:if="${campeon.estado == 0}" style="color: red;">Inactivo</span>
+                        </td>
+                        <td>
+                            <a th:href="@{'/admin/campeones/editar/' + ${campeon.idCampeon}}" class="btn btn-warning">Editar</a>
+                            <a th:href="@{'/admin/campeones/eliminar/' + ${campeon.idCampeon}}" 
+                               class="btn btn-danger"
+                               onclick="return confirm('¿Estás seguro de eliminar este campeón?')">Eliminar</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div th:if="${#lists.isEmpty(campeones)}" style="text-align: center; padding: 2rem;">
+                <p>No hay campeones registrados</p>
+                <a th:href="@{/admin/campeones/form}" class="btn btn-primary">Agregar el primer campeón</a>
+            </div>
+        </div>
+    </main>
+
+    <div th:replace="~{fragments/header :: footer}"></div>
+</body>
+</html>

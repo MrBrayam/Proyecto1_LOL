@@ -9,13 +9,14 @@ import java.util.List;
 @Repository
 public interface CampeonRepository extends JpaRepository<Campeon, String> {
     
-    List<Campeon> findByEstadoTrueOrderByNombreCampeon();
+    // Con @Where, automáticamente filtra por estado=1
+    List<Campeon> findAllByOrderByNombreCampeon();
     
-    @Query("SELECT c FROM Campeon c WHERE c.estado = true AND UPPER(SUBSTRING(c.nombreCampeon, 1, 1)) = :letra ORDER BY c.nombreCampeon")
-    List<Campeon> findByLetraAndEstadoTrue(String letra);
+    @Query("SELECT c FROM Campeon c WHERE UPPER(SUBSTRING(c.nombreCampeon, 1, 1)) = :letra ORDER BY c.nombreCampeon")
+    List<Campeon> findByLetra(String letra);
     
-    @Query("SELECT DISTINCT UPPER(SUBSTRING(c.nombreCampeon, 1, 1)) FROM Campeon c WHERE c.estado = true ORDER BY UPPER(SUBSTRING(c.nombreCampeon, 1, 1))")
-    List<String> findDistinctLetrasActivas();
+    @Query("SELECT DISTINCT UPPER(SUBSTRING(c.nombreCampeon, 1, 1)) FROM Campeon c ORDER BY UPPER(SUBSTRING(c.nombreCampeon, 1, 1))")
+    List<String> findDistinctLetras();
     
-    List<Campeon> findByNombreCampeonContainingIgnoreCaseAndEstadoTrue(String nombre);
+    List<Campeon> findByNombreCampeonContainingIgnoreCase(String nombre);
 }

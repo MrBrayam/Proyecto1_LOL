@@ -1,4 +1,8 @@
 -- Insertar algunos campeones de prueba en la tabla
+-- Primero eliminar datos existentes si los hay
+DELETE FROM campeones;
+
+-- Insertar datos de prueba
 INSERT INTO campeones (ID_Campeon, Nombre_Campeon, Descripcion_Campeon, Estado) VALUES 
 ('AAT1', 'Aatrox', 'La Espada de los Mundos Sombríos', 1),
 ('AHR1', 'Ahri', 'La Vastaya de Nueve Colas', 1),

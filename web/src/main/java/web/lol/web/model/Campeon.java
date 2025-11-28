@@ -1,9 +1,13 @@
 package web.lol.web.model;
 
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "campeones")
+@SQLDelete(sql = "UPDATE campeones SET Estado=0 WHERE ID_Campeon=?")
+@Where(clause = "Estado=1")
 public class Campeon {
     @Id
     @Column(name = "ID_Campeon", length = 4)
@@ -16,7 +20,7 @@ public class Campeon {
     private String descripcionCampeon;
 
     @Column(name = "Estado")
-    private Boolean estado;
+    private Integer estado = 1;
 
     // Campos adicionales para la aplicación web (no mapeados a la BD)
     @Transient
@@ -28,18 +32,18 @@ public class Campeon {
     // Constructores
     public Campeon() {}
 
-    public Campeon(String idCampeon, String nombreCampeon, String descripcionCampeon, Boolean estado) {
+    public Campeon(String idCampeon, String nombreCampeon, String descripcionCampeon) {
         this.idCampeon = idCampeon;
         this.nombreCampeon = nombreCampeon;
         this.descripcionCampeon = descripcionCampeon;
-        this.estado = estado;
+        this.estado = 1;
     }
 
-    public Campeon(String idCampeon, String nombreCampeon, String descripcionCampeon, Boolean estado, String imagenPath, String letra) {
+    public Campeon(String idCampeon, String nombreCampeon, String descripcionCampeon, String imagenPath, String letra) {
         this.idCampeon = idCampeon;
         this.nombreCampeon = nombreCampeon;
         this.descripcionCampeon = descripcionCampeon;
-        this.estado = estado;
+        this.estado = 1;
         this.imagenPath = imagenPath;
         this.letra = letra;
     }
@@ -69,11 +73,11 @@ public class Campeon {
         this.descripcionCampeon = descripcionCampeon;
     }
 
-    public Boolean getEstado() {
+    public Integer getEstado() {
         return estado;
     }
 
-    public void setEstado(Boolean estado) {
+    public void setEstado(Integer estado) {
         this.estado = estado;
     }
 

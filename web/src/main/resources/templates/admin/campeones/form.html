@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="${campeon.idCampeon != null ? 'Editar Campeón' : 'Nuevo Campeón'}">Formulario Campeón</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/normalize.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/base.css}">
+    <style>
+        .form-container { max-width: 600px; margin: 0 auto; padding: 2rem; }
+        .form-group { margin-bottom: 1rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: bold; }
+        .form-group input, .form-group textarea { width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 4px; }
+        .form-group textarea { height: 100px; resize: vertical; }
+        .btn { padding: 0.75rem 1.5rem; margin: 0.5rem 0; text-decoration: none; border-radius: 4px; display: inline-block; border: none; cursor: pointer; }
+        .btn-primary { background: #007bff; color: white; }
+        .btn-secondary { background: #6c757d; color: white; }
+        .btn:hover { opacity: 0.8; }
+    </style>
+</head>
+<body>
+    <div th:replace="~{fragments/header :: header}"></div>
+
+    <main>
+        <div class="form-container">
+            <h1 th:text="${campeon.idCampeon != null ? 'Editar Campeón' : 'Nuevo Campeón'}">Formulario Campeón</h1>
+            
+            <form th:action="${campeon.idCampeon != null ? '/admin/campeones/update' : '/admin/campeones/create'}" method="post">
+                
+                <div class="form-group" th:if="${campeon.idCampeon != null}">
+                    <input type="hidden" name="idCampeon" th:value="${campeon.idCampeon}">
+                    <label>ID Campeón:</label>
+                    <input type="text" th:value="${campeon.idCampeon}" disabled style="background: #f5f5f5;">
+                </div>
+
+                <div class="form-group" th:if="${campeon.idCampeon == null}">
+                    <label for="idCampeon">ID Campeón: *</label>
+                    <input type="text" id="idCampeon" name="idCampeon" placeholder="Ej: AAT1" maxlength="4" required>
+                    <small>Máximo 4 caracteres</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="nombreCampeon">Nombre del Campeón: *</label>
+                    <input type="text" id="nombreCampeon" name="nombreCampeon" 
+                           th:value="${campeon.nombreCampeon}" 
+                           placeholder="Ej: Aatrox" maxlength="50" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="descripcionCampeon">Descripción:</label>
+                    <textarea id="descripcionCampeon" name="descripcionCampeon" 
+                              placeholder="Ej: La Espada de los Mundos Sombríos" 
+                              maxlength="150" th:text="${campeon.descripcionCampeon}"></textarea>
+                </div>
+
+                <div style="text-align: center;">
+                    <button type="submit" class="btn btn-primary" 
+                            th:text="${campeon.idCampeon != null ? 'Actualizar' : 'Crear'} + ' Campeón'">Guardar</button>
+                    <a th:href="@{/admin/campeones}" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <div th:replace="~{fragments/header :: footer}"></div>
+</body>
+</html>
