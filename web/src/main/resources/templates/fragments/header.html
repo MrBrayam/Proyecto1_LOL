@@ -5,53 +5,34 @@
 </head>
 <body>
     <!-- Header Fragment -->
-    <header th:fragment="header" class="header">
-        <div class="container">
-            <div class="nav-brand">
-                <img th:src="@{/img/LOLLogo.png}" alt="League of Legends" class="logo">
+    <header th:fragment="header" class="site-header inicio">
+        <div class="contenedor contenido-header">
+            <div class="barra">
+                <a th:href="@{/}">
+                    <img th:src="@{/img/LOLLogo.png}" alt="Logo League of Legends" class="logo1">
+                </a>
+                <nav class="navegacion">
+                    <a th:href="@{/}">Inicio</a>
+                    <a th:href="@{/campeones}">Campeones</a>
+                    <a th:href="@{/runas}">Runas</a>
+                    <a th:href="@{/contacto}">Contacto</a>
+                </nav>
             </div>
-            <nav class="nav-menu">
-                <ul>
-                    <li><a th:href="@{/}">Inicio</a></li>
-                    <li><a th:href="@{/campeones}">Campeones</a></li>
-                    <li><a th:href="@{/runas}">Runas</a></li>
-                    <li><a th:href="@{/contacto}">Contacto</a></li>
-                </ul>
-            </nav>
         </div>
     </header>
 
     <!-- Hero Fragment -->
-    <section th:fragment="hero(title, description)" class="hero">
+    <section th:fragment="hero(title, description)" class="hero-inicio">
         <div class="hero-content">
-            <h1 th:text="${title}">Título por defecto</h1>
-            <p th:text="${description}">Descripción por defecto</p>
+            <h1 th:text="${title}" class="titulo-pagina">Título por defecto</h1>
+            <p th:text="${description}" class="descripcion-inicio">Descripción por defecto</p>
         </div>
     </section>
 
     <!-- Footer Fragment -->
-    <footer th:fragment="footer" class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>League of Legends</h3>
-                    <p>Tu fuente definitiva de información sobre el juego más popular del mundo.</p>
-                </div>
-                <div class="footer-section">
-                    <h4>Enlaces Rápidos</h4>
-                    <ul>
-                        <li><a th:href="@{/}">Inicio</a></li>
-                        <li><a th:href="@{/campeones}">Campeones</a></li>
-                        <li><a th:href="@{/runas}">Runas</a></li>
-                        <li><a th:href="@{/contacto}">Contacto</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Contacto</h4>
-                    <p>Email: info@lolguide.com</p>
-                    <p>© 2025 LoL Guide. Todos los derechos reservados.</p>
-                </div>
-            </div>
+    <footer th:fragment="footer" class="site-footer">
+        <div class="contenedor">
+            <p>© 2025 WebLOL. Todos los derechos reservados.</p>
         </div>
     </footer>
 </body>

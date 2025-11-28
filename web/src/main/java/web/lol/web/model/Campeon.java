@@ -97,7 +97,6 @@ public class Campeon {
         this.letra = letra;
     }
 
-    // Métodos de conveniencia para compatibilidad con el código existente
     public String getNombre() {
         return nombreCampeon;
     }
