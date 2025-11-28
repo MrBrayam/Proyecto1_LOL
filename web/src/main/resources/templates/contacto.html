@@ -17,7 +17,7 @@
         <section class="accesos-rapidos">
             <h2>Formulario de Contacto</h2>
             <div class="contenedor">
-                <form id="contactForm" class="contact-card" th:action="@{/contacto}" method="post">
+                <form id="contactForm" class="contact-card">
                     <label for="name">Nombre</label>
                     <input id="name" name="name" type="text" placeholder="Tu nombre" required>
 
@@ -36,6 +36,7 @@
 
     <div th:replace="~{fragments/header :: footer}"></div>
     
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script type="text/javascript" th:src="@{/js/jquery-3.7.1.min.js}"></script>
     <script type="text/javascript" th:src="@{/js/contact-form.js}"></script>
 </body>
