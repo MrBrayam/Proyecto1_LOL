@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+</head>
+<body>
+    <!-- Header Fragment -->
+    <header th:fragment="header" class="header">
+        <div class="container">
+            <div class="nav-brand">
+                <img th:src="@{/img/LOLLogo.png}" alt="League of Legends" class="logo">
+            </div>
+            <nav class="nav-menu">
+                <ul>
+                    <li><a th:href="@{/}">Inicio</a></li>
+                    <li><a th:href="@{/campeones}">Campeones</a></li>
+                    <li><a th:href="@{/runas}">Runas</a></li>
+                    <li><a th:href="@{/contacto}">Contacto</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Fragment -->
+    <section th:fragment="hero(title, description)" class="hero">
+        <div class="hero-content">
+            <h1 th:text="${title}">Título por defecto</h1>
+            <p th:text="${description}">Descripción por defecto</p>
+        </div>
+    </section>
+
+    <!-- Footer Fragment -->
+    <footer th:fragment="footer" class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>League of Legends</h3>
+                    <p>Tu fuente definitiva de información sobre el juego más popular del mundo.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Enlaces Rápidos</h4>
+                    <ul>
+                        <li><a th:href="@{/}">Inicio</a></li>
+                        <li><a th:href="@{/campeones}">Campeones</a></li>
+                        <li><a th:href="@{/runas}">Runas</a></li>
+                        <li><a th:href="@{/contacto}">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contacto</h4>
+                    <p>Email: info@lolguide.com</p>
+                    <p>© 2025 LoL Guide. Todos los derechos reservados.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

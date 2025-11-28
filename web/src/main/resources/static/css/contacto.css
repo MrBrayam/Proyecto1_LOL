@@ -1,0 +1,193 @@
+.hero-inicio {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--light-gold);
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 50%, var(--accent-blue) 100%);
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-inicio .hero-content {
+    max-width: 900px;
+    padding: 2rem;
+    text-align: center;
+    color: var(--light-gold);
+    position: relative;
+    z-index: 2;
+}
+
+.hero-inicio .titulo-pagina {
+    font-size: 3.5rem;
+    background: linear-gradient(135deg, var(--gold), var(--light-gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.descripcion-inicio {
+    font-size: 1.3rem;
+    max-width: 700px;
+    margin: 0 auto;
+    opacity: 0.95;
+    line-height: 1.8;
+}
+
+.accesos-rapidos {
+    padding: 3rem 1rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    background: var(--white);
+}
+
+.accesos-rapidos h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    color: var(--dark-gray);
+    font-weight: 700;
+    position: relative;
+}
+
+.accesos-rapidos h2::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--gold), var(--dark-gold));
+    border-radius: 2px;
+}
+
+.contact-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 24px;
+    background: rgba(255,255,255,0.92);
+    border-radius: 8px;
+    box-shadow: 0 6px 18px rgba(0,0,0,.12);
+}
+
+.contact-header {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.contact-header img {
+    width: 72px;
+    height: 72px;
+    object-fit: cover;
+}
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    gap: 24px;
+    margin-top: 18px;
+}
+
+.contact-card {
+    padding: 16px;
+    border-radius: 6px;
+    background: #f7f7f7;
+}
+
+label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+}
+
+input[type="text"], input[type="email"], textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #cfcfcf;
+    border-radius: 6px;
+}
+
+textarea {
+    min-height: 140px;
+    resize: vertical;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 16px;
+    background: linear-gradient(135deg, var(--gold), var(--dark-gold));
+    color: #fff;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn:hover {
+    background: linear-gradient(135deg, var(--dark-gold), var(--gold));
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(200,170,110,0.4);
+}
+
+.btn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.muted {
+    color: #666;
+    font-size: 0.95rem;
+    margin-top: 1rem;
+    padding: 0.5rem;
+    border-radius: 4px;
+    text-align: center;
+    min-height: 20px;
+}
+
+/* Estados del mensaje de contacto */
+#status {
+    transition: all 0.3s ease;
+}
+
+#status:not(:empty) {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid currentColor;
+}
+
+@media (max-width: 1200px) {
+    .accesos-rapidos {
+        padding: 2rem 1rem;
+    }
+}
+
+@media (max-width: 880px) {
+    .contact-grid {
+        grid-template-columns: 1fr;
+        margin-top: 12px;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-inicio .titulo-pagina {
+        font-size: 2.8rem;
+    }
+    
+    .accesos-rapidos h2 {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-inicio .titulo-pagina {
+        font-size: 2.2rem;
+    }
+}

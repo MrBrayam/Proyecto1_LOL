@@ -1,0 +1,264 @@
+.hero-inicio {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--light-gold);
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 50%, var(--accent-blue) 100%);
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-inicio .hero-content {
+    max-width: 900px;
+    padding: 2rem;
+    text-align: center;
+    color: var(--light-gold);
+    position: relative;
+    z-index: 2;
+}
+
+.hero-inicio .titulo-pagina {
+    font-size: 3.5rem;
+    background: linear-gradient(135deg, var(--gold), var(--light-gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.descripcion-inicio {
+    font-size: 1.3rem;
+    max-width: 700px;
+    margin: 0 auto;
+    opacity: 0.95;
+    line-height: 1.8;
+}
+
+.hero-campeones {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--danger);
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, rgba(200,170,110,0.1), rgba(184,134,11,0.1));
+    border-bottom: 3px solid var(--gold);
+}
+
+.imagen-principal {
+    max-width: 100%;
+    height: auto;
+    max-height: 280px;
+    margin-bottom: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    border: 2px solid var(--gold);
+}
+
+.galeria-campeones {
+    padding: 3rem 1rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    background: var(--white);
+}
+
+.galeria-campeones h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    color: var(--dark-gray);
+    font-weight: 700;
+    position: relative;
+}
+
+.galeria-campeones h2::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--gold), var(--dark-gold));
+    border-radius: 2px;
+}
+
+.grid-campeones {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 1rem 0;
+}
+
+.campeon-card {
+    background: var(--white);
+    border-radius: 15px;
+    box-shadow: 0 6px 20px rgba(30,35,40,0.12);
+    transition: all 0.4s ease;
+    overflow: hidden;
+    border: 2px solid rgba(200,170,110,0.1);
+    position: relative;
+}
+
+.campeon-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(200,170,110,0.05), rgba(184,134,11,0.05));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.campeon-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(200,170,110,0.25);
+    border-color: var(--gold);
+}
+
+.campeon-card:hover::after {
+    opacity: 1;
+}
+
+.campeon-img {
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+    border-bottom: 3px solid var(--gold);
+}
+
+.campeon-card:hover .campeon-img {
+    transform: scale(1.05);
+}
+
+.campeon-card h3 {
+    padding: 1.2rem 1.2rem 0.5rem;
+    margin: 0;
+    font-size: 1.4rem;
+    color: var(--dark-gray);
+    font-weight: 600;
+    text-align: center;
+}
+
+.campeon-card p {
+    padding: 0 1.2rem 1.2rem;
+    margin: 0;
+    color: var(--medium-gray);
+    font-size: 0.95rem;
+    text-align: center;
+    font-style: italic;
+}
+
+.letra-seccion {
+    margin-bottom: 4rem;
+    background: linear-gradient(135deg, rgba(240,230,210,0.3), rgba(200,170,110,0.1));
+    padding: 2rem;
+    border-radius: 15px;
+    border-left: 5px solid var(--gold);
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.letra-titulo {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--dark-gray);
+    margin: 0 0 2rem 0;
+    padding: 1rem 0;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-align: center;
+    position: relative;
+}
+
+.letra-titulo::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--gold), var(--dark-gold));
+    border-radius: 2px;
+}
+
+.letra-titulo::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 1200px) {
+    .galeria-campeones {
+        padding: 2rem 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-inicio .titulo-pagina {
+        font-size: 2.8rem;
+    }
+    
+    .grid-campeones {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+    }
+    
+    .imagen-principal {
+        max-height: 200px;
+    }
+    
+    .letra-titulo {
+        font-size: 2.2rem;
+        letter-spacing: 2px;
+    }
+    
+    .letra-seccion {
+        padding: 1.5rem;
+        margin-bottom: 3rem;
+    }
+    
+    .galeria-campeones h2 {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-inicio .titulo-pagina {
+        font-size: 2.2rem;
+    }
+    
+    .grid-campeones {
+        grid-template-columns: 1fr;
+    }
+    
+    .letra-titulo {
+        font-size: 1.8rem;
+        letter-spacing: 1px;
+    }
+    
+    .campeon-img {
+        height: 220px;
+    }
+}

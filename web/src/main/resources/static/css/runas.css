@@ -1,0 +1,389 @@
+.hero-inicio {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--light-gold);
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 50%, var(--accent-blue) 100%);
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-inicio .hero-content {
+    max-width: 900px;
+    padding: 2rem;
+    text-align: center;
+    color: var(--light-gold);
+    position: relative;
+    z-index: 2;
+}
+
+.hero-inicio .titulo-pagina {
+    font-size: 3.5rem;
+    background: linear-gradient(135deg, var(--gold), var(--light-gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.descripcion-inicio {
+    font-size: 1.3rem;
+    max-width: 700px;
+    margin: 0 auto;
+    opacity: 0.95;
+    line-height: 1.8;
+}
+
+.galeria-campeones {
+    padding: 3rem 1rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    background: var(--white);
+}
+
+.galeria-campeones h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    color: var(--dark-gray);
+    font-weight: 700;
+    position: relative;
+}
+
+.galeria-campeones h2::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--gold), var(--dark-gold));
+    border-radius: 2px;
+}
+
+.accesos-rapidos {
+    padding: 3rem 1rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    background: var(--white);
+}
+
+.accesos-rapidos h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    color: var(--dark-gray);
+    font-weight: 700;
+    position: relative;
+}
+
+.accesos-rapidos h2::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--gold), var(--dark-gold));
+    border-radius: 2px;
+}
+
+.grid-accesos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 1rem 0;
+}
+
+.acceso-card {
+    background: var(--white);
+    border-radius: 5%;
+    box-shadow: 0 15px 15px rgba(30,40,33,0.1);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    text-decoration: none;
+    color: inherit;
+    overflow: hidden;
+    border: 2px solid transparent;
+    position: relative;
+}
+
+.acceso-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, var(--gold), var(--dark-gold));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1;
+}
+
+.acceso-card:hover {
+    transform: translateY(-8px) scale(1.05);
+    box-shadow: 0 12px 30px rgba(245,193,103,0.355);
+    border-color: var(--gold);
+}
+
+.acceso-card:hover::before {
+    opacity: 0.05;
+}
+
+.acceso-img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.acceso-card:hover .acceso-img {
+    transform: scale(1.05);
+}
+
+.acceso-card h3 {
+    padding: 1.5rem 1.5rem 0.5rem;
+    margin: auto;
+    font-size: 1.6rem;
+    text-align: center;
+    color: var(--dark-gray);
+    font-weight: 600;
+    position: relative;
+    z-index: 2;
+}
+
+.acceso-card p {
+    padding: 0 1.5rem 1.5rem;
+    margin: auto;
+    color: var(--medium-gray);
+    font-size: 1rem;
+    text-align: justify;
+    line-height: 1.5;
+    position: relative;
+    z-index: 2;
+}
+
+.runas-grid-3x3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+.runa-card-small {
+    background: var(--white);
+    border-radius: 8px;
+    padding: 12px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(30,35,40,0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: 2px solid transparent;
+}
+
+.runa-card-small:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 15px rgba(200,170,110,0.2);
+    border-color: var(--gold);
+}
+
+.runa-card-small img {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 8px;
+}
+
+.runa-card-small h4 {
+    font-size: 0.9rem;
+    margin: 0 0 4px 0;
+    color: var(--dark-gray);
+    font-weight: 600;
+}
+
+.runa-card-small p {
+    font-size: 0.75rem;
+    color: var(--medium-gray);
+    margin: 0;
+    line-height: 1.3;
+}
+
+.acceso-card.runa-precision {
+    border-left: 4px solid #FFD700;
+    background: linear-gradient(135deg, rgba(255,215,0,0.773), var(--white));
+}
+
+.acceso-card.runa-precision:hover {
+    border-color: #FFD700;
+    box-shadow: 0 12px 30px rgba(255,215,0,0.3);
+}
+
+.acceso-card.runa-dominacion {
+    border-left: 4px solid #DC143C;
+    background: linear-gradient(135deg, rgba(220,20,60,0.773), var(--white));
+}
+
+.acceso-card.runa-dominacion:hover {
+    border-color: #DC143C;
+    box-shadow: 0 12px 30px rgba(220,20,60,0.3);
+}
+
+.acceso-card.runa-brujeria {
+    border-left: 4px solid #4169E1;
+    background: linear-gradient(135deg, rgba(65,105,225,0.773), var(--white));
+}
+
+.acceso-card.runa-brujeria:hover {
+    border-color: #4169E1;
+    box-shadow: 0 12px 30px rgba(65,105,225,0.3);
+}
+
+.acceso-card.runa-valor {
+    border-left: 4px solid #228B22;
+    background: linear-gradient(135deg, rgba(34,139,34,0.773), var(--white));
+}
+
+.acceso-card.runa-valor:hover {
+    border-color: #228B22;
+    box-shadow: 0 12px 30px rgba(34,139,34,0.3);
+}
+
+.acceso-card.runa-inspiracion {
+    border-left: 4px solid #9932CC;
+    background: linear-gradient(135deg, rgba(153,50,204,0.773), var(--white));
+}
+
+.acceso-card.runa-inspiracion:hover {
+    border-color: #9932CC;
+    box-shadow: 0 12px 30px rgba(153,50,204,0.3);
+}
+
+.cuadro-boton-runas {
+    display: inline-block;
+    padding: 10px 16px;
+    background: #e7ac08d6;
+    color: #fff;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.cuadro-boton-precision {
+    background: linear-gradient(135deg, #FFD700, #FFA500);
+    color: #333;
+    font-weight: 600;
+}
+
+.cuadro-boton-precision:hover {
+    background: linear-gradient(135deg, #FFA500, #FFD700);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255,215,0,0.4);
+}
+
+.cuadro-boton-dominacion {
+    background: linear-gradient(135deg, #DC143C, #B22222);
+    color: #fff;
+    font-weight: 600;
+}
+
+.cuadro-boton-dominacion:hover {
+    background: linear-gradient(135deg, #B22222, #DC143C);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(220,20,60,0.4);
+}
+
+.cuadro-boton-brujeria {
+    background: linear-gradient(135deg, #4169E1, #1E90FF);
+    color: #fff;
+    font-weight: 600;
+}
+
+.cuadro-boton-brujeria:hover {
+    background: linear-gradient(135deg, #1E90FF, #4169E1);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(65,105,225,0.4);
+}
+
+.cuadro-boton-valor {
+    background: linear-gradient(135deg, #228B22, #32CD32);
+    color: #fff;
+    font-weight: 600;
+}
+
+.cuadro-boton-valor:hover {
+    background: linear-gradient(135deg, #32CD32, #228B22);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(34,139,34,0.4);
+}
+
+.cuadro-boton-inspiracion {
+    background: linear-gradient(135deg, #9932CC, #BA55D3);
+    color: #fff;
+    font-weight: 600;
+}
+
+.cuadro-boton-inspiracion:hover {
+    background: linear-gradient(135deg, #BA55D3, #9932CC);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(153,50,204,0.4);
+}
+
+.boton-volver-runas {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.boton-volver-runas a {
+    text-decoration: none;
+    color: var(--extrea);
+}
+
+.boton-volver-runas a:hover {
+    color: var(--gold);
+}
+
+@media (max-width: 1200px) {
+    .accesos-rapidos, .galeria-campeones {
+        padding: 2rem 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-inicio .titulo-pagina {
+        font-size: 2.8rem;
+    }
+    
+    .accesos-rapidos h2, .galeria-campeones h2 {
+        font-size: 2rem;
+    }
+    
+    .grid-accesos {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+    }
+    
+    .runas-grid-3x3 {
+        grid-template-columns: repeat(2, 1fr);
+        max-width: 400px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-inicio .titulo-pagina {
+        font-size: 2.2rem;
+    }
+    
+    .grid-accesos {
+        grid-template-columns: 1fr;
+    }
+    
+    .runas-grid-3x3 {
+        grid-template-columns: 1fr;
+        max-width: 250px;
+    }
+}

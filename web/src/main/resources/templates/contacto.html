@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="${title}">Contacto - League of Legends</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/normalize.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/base.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/contacto.css}">
+</head>
+<body>
+    <div th:replace="~{fragments/header :: header}"></div>
+
+    <main>
+        <div th:replace="~{fragments/hero :: hero(title=${title}, description=${description})}"></div>
+        
+        <section class="accesos-rapidos">
+            <h2>Formulario de Contacto</h2>
+            <div class="contenedor">
+                <form id="contactForm" class="contact-card" th:action="@{/contacto}" method="post">
+                    <label for="name">Nombre</label>
+                    <input id="name" name="name" type="text" placeholder="Tu nombre" required>
+
+                    <label for="email">Correo electrónico</label>
+                    <input id="email" name="email" type="email" placeholder="tucorreo@ejemplo.com" required>
+
+                    <label for="message">Mensaje</label>
+                    <textarea id="message" name="message" placeholder="Escribe tu mensaje..." required></textarea>
+
+                    <button type="submit" class="btn">Enviar mensaje</button>
+                    <p id="status" class="muted"></p>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <div th:replace="~{fragments/footer :: footer}"></div>
+    
+    <script type="text/javascript" th:src="@{/js/jquery-3.7.1.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/contact-form.js}"></script>
+    <script type="text/javascript" th:src="@{/js/components.js}"></script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="${title}">Runas - League of Legends</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/normalize.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/base.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/inicio.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/runas.css}">
+</head>
+<body>
+    <div th:replace="~{fragments/header :: header}"></div>
+
+    <main>
+        <div th:replace="~{fragments/hero :: hero(title=${title}, description=${description})}"></div>
+        
+        <section class="accesos-rapidos">
+            <h2>Categorías de Runas</h2>
+            <div class="grid-accesos">
+                <a th:href="@{/runas/precision}" class="acceso-card runa-precision">
+                    <img th:src="@{/img/1_Runas/Presicion/runas-precision-league-of-legends.jpg}" alt="Precisión" class="acceso-img">
+                    <h3>Precisión</h3>
+                    <p>Mejora tus ataques y sustentabilidad. Perfecta para campeones que dependen de ataques básicos.</p>
+                </a>
+                
+                <a th:href="@{/runas/dominacion}" class="acceso-card runa-dominacion">
+                    <img th:src="@{/img/1_Runas/Dominacion/runas-dominacion.jpg}" alt="Dominación" class="acceso-img">
+                    <h3>Dominación</h3>
+                    <p>Aumenta tu daño explosivo y capacidades de eliminación. Ideal para asesinos y burst mages.</p>
+                </a>
+                
+                <a th:href="@{/runas/brujeria}" class="acceso-card runa-brujeria">
+                    <img th:src="@{/img/1_Runas/Brujeria/runas-brujeria.jpg}" alt="Brujería" class="acceso-img">
+                    <h3>Brujería</h3>
+                    <p>Potencia tus habilidades mágicas y utilidad. Excelente para magos y campeones de habilidades.</p>
+                </a>
+                
+                <a th:href="@{/runas/valor}" class="acceso-card runa-valor">
+                    <img th:src="@{/img/1_Runas/Valor/runas-valor.jpg}" alt="Valor" class="acceso-img">
+                    <h3>Valor</h3>
+                    <p>Incrementa tu resistencia y capacidades defensivas. Perfecta para tanques y supports.</p>
+                </a>
+                
+                <a th:href="@{/runas/inspiracion}" class="acceso-card runa-inspiracion">
+                    <img th:src="@{/img/1_Runas/Inspiracion/runas-inspiracion.jpg}" alt="Inspiración" class="acceso-img">
+                    <h3>Inspiración</h3>
+                    <p>Ofrece utilidades únicas y opciones creativas. Ideal para estrategias no convencionales.</p>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <div th:replace="~{fragments/footer :: footer}"></div>
+    
+    <script type="text/javascript" th:src="@{/js/jquery-3.7.1.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/components.js}"></script>
+</body>
+</html>

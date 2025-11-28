@@ -1,0 +1,175 @@
+:root {
+    --primary-blue: #0F2027;
+    --secondary-blue: #203A43;
+    --accent-blue: #2C5364;
+    --gold: #C8AA6E;
+    --dark-gold: #B8860B;
+    --light-gold: #F0E6D2;
+    --extrea: #ffffff;
+    
+    --dark-gray: #1E2328;
+    --medium-gray: #3C3C41;
+    --light-gray: #5BC0DE;
+    --white: #F0F2F5;
+    --black: #000000;
+    
+    --success: #00D084;
+    --warning: #F0B90B;
+    --danger: #E74C3C;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1.6rem;
+    line-height: 1.6;
+    color: var(--dark-gray);
+    background-color: var(--white);
+}
+
+.contenedor {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.full-bleed {
+    width: 100%;
+}
+
+.site-header {
+    background: var(--dark-gray);
+    padding: 1rem 0 2rem 0;
+    box-shadow: 0 2px 10px rgba(40, 40, 40, 0.3);
+}
+
+.contenido-header {
+    position: relative;
+    z-index: 2;
+}
+
+.barra {
+    padding-top: 0;
+}
+
+.logo1 {
+    margin: 0;
+    padding: 0;
+    max-height: 100px;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+}
+
+.navegacion a {
+    color: var(--light-gold);
+    text-decoration: none;
+    font-size: 1rem;
+    display: block;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.2px;
+}
+
+.navegacion a:hover {
+    color: var(--gold);
+    text-shadow: 0 0 10px rgba(200,170,110,0.5);
+}
+
+@media (min-width: 768px) {
+    .contenido-header {
+        text-align: left;
+    }
+    
+    .barra {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .navegacion a {
+        display: inline-block;
+        font-size: 1.8rem;
+        margin-right: 2rem;
+    }
+    
+    .navegacion a:last-of-type {
+        margin: 0;
+    }
+}
+
+.site-header.inicio {
+    background-image: url(../img/FondoPag.jpg);
+    background-position: center;
+    background-size: cover;
+    height: 425px;
+    width: 100%;
+    position: relative;
+}
+
+.site-header.inicio::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(77, 106, 119, 0.7), rgba(67, 91, 101, 0.7));
+}
+
+.titulo-pagina {
+    font-size: 3rem;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    text-shadow: 2px 2px 6px rgba(0,0,0,0.7);
+    font-weight: 500;
+    color: var(--light-gold);
+}
+
+.descripcion-inicio {
+    font-size: 1.3rem;
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto;
+    opacity: 0.95;
+    line-height: 1.8;
+}
+
+.site-footer {
+    background-color: #1e2328;
+    color: #cdbe91;
+    padding: 20px 0;
+    text-align: center;
+    margin-top: 40px;
+}
+
+.site-footer p {
+    margin: 0;
+    font-size: 14px;
+}
+
+*:focus {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--white);
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(var(--gold), var(--dark-gold));
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(var(--dark-gold), var(--gold));
+}

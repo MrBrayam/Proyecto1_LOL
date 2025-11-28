@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="${title}">Personajes de League of Legends</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/normalize.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/base.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/inicio.css}">
+</head>
+<body>
+    <div th:replace="~{fragments/header :: header}"></div>
+    
+    <main>
+        <div th:replace="~{fragments/hero :: hero(title=${title}, description=${description})}"></div>
+        
+        <section class="accesos-rapidos">
+            <h2>Accesos Rápidos</h2>
+            <div class="grid-accesos">
+                <a th:href="@{/campeones}" class="acceso-card">
+                    <img th:src="@{/img/Icono-menu-personajes.png}" alt="Campeones" class="acceso-img">
+                    <h3>Campeones</h3>
+                    <p>Descubre todos los campeones disponibles</p>
+                </a>
+                <a th:href="@{/runas}" class="acceso-card">
+                    <img th:src="@{/img/RunasLogo.jpg}" alt="Runas" class="acceso-img">
+                    <h3>Runas</h3>
+                    <p>Conoce las runas y encaminate hacia la victoria</p>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <div th:replace="~{fragments/footer :: footer}"></div>
+    
+    <script type="text/javascript" th:src="@{/js/jquery-3.7.1.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/components.js}"></script>
+</body>
+</html>

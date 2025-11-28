@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="${title}">Campeones - League of Legends</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/normalize.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/base.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/campeones.css}">
+</head>
+<body>
+    <div th:replace="~{fragments/header :: header}"></div>
+
+    <main>
+        <div th:replace="~{fragments/hero :: hero(title=${title}, description=${description})}"></div>
+
+        <section class="galeria-campeones">
+            <div>
+                <h2>Campeones Disponibles</h2>
+                
+                <!-- Iteramos sobre cada letra y sus campeones -->
+                <div th:each="entry : ${campeonesPorLetra}" class="letra-seccion">
+                    <h3 class="letra-titulo" th:text="${entry.key}">A</h3>
+                    <div class="grid-campeones">
+                        <!-- Iteramos sobre los campeones de esa letra -->
+                        <div th:each="campeon : ${entry.value}" class="campeon-card">
+                            <img th:src="@{${campeon.imagenPath}}" 
+                                 th:alt="${campeon.nombre}" 
+                                 class="campeon-img">
+                            <h3 th:text="${campeon.nombre}">Nombre del Campeón</h3>
+                            <p th:text="${campeon.titulo}">Título del Campeón</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div th:replace="~{fragments/footer :: footer}"></div>
+    
+    <script type="text/javascript" th:src="@{/js/jquery-3.7.1.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/components.js}"></script>
+</body>
+</html>
