@@ -15,38 +15,103 @@
     <main>
         <div th:replace="~{fragments/header :: hero(title=${title}, description=${description})}"></div>
         
-        <section class="accesos-rapidos">
-            <h2>Categorías de Runas</h2>
-            <div class="grid-accesos">
-                <a th:href="@{/runas/precision}" class="acceso-card runa-precision">
-                    <img th:src="@{/img/1_Runas/Presicion/runas-precision-league-of-legends.jpg}" alt="Precisión" class="acceso-img">
-                    <h3>Precisión</h3>
-                    <p>Mejora tus ataques y sustentabilidad. Perfecta para campeones que dependen de ataques básicos.</p>
-                </a>
+        <section class="runas-categorias">
+            <div class="container">
+                <h2>Categorías de Runas</h2>
+                <p class="categorias-descripcion">Cada categoría de runas ofrece diferentes bonificaciones y estrategias. Elige la que mejor se adapte a tu estilo de juego.</p>
                 
-                <a th:href="@{/runas/dominacion}" class="acceso-card runa-dominacion">
-                    <img th:src="@{/img/1_Runas/Dominacion/runas-dominacion.jpg}" alt="Dominación" class="acceso-img">
-                    <h3>Dominación</h3>
-                    <p>Aumenta tu daño explosivo y capacidades de eliminación. Ideal para asesinos y burst mages.</p>
-                </a>
+                <div class="runas-grid">
+                    <a th:href="@{/runas/precision}" class="runa-categoria-card precision">
+                        <div class="card-imagen">
+                            <img th:src="@{/img/1_Runas/Presicion/runas-precision-league-of-legends.jpg}" alt="Precisión">
+                        </div>
+                        <div class="card-content">
+                            <h3>Precisión</h3>
+                            <p>Mejora tus ataques básicos y sustentabilidad en combate prolongado. Perfecta para campeones que dependen de ataques básicos.</p>
+                            <div class="card-stats">
+                                <span class="stat">🗡️ Daño Sostenido</span>
+                                <span class="stat">❤️ Sustentabilidad</span>
+                            </div>
+                        </div>
+                    </a>
+                    
+                    <a th:href="@{/runas/dominacion}" class="runa-categoria-card dominacion">
+                        <div class="card-imagen">
+                            <img th:src="@{/img/1_Runas/Dominacion/runas-dominacion.jpg}" alt="Dominación">
+                        </div>
+                        <div class="card-content">
+                            <h3>Dominación</h3>
+                            <p>Aumenta tu poder explosivo y capacidades de eliminación instantánea. Ideal para asesinos y magos burst.</p>
+                            <div class="card-stats">
+                                <span class="stat">💥 Daño Explosivo</span>
+                                <span class="stat">⚡ Eliminaciones</span>
+                            </div>
+                        </div>
+                    </a>
+                    
+                    <a th:href="@{/runas/brujeria}" class="runa-categoria-card brujeria">
+                        <div class="card-imagen">
+                            <img th:src="@{/img/1_Runas/Brujeria/runas-brujeria.jpg}" alt="Brujería">
+                        </div>
+                        <div class="card-content">
+                            <h3>Brujería</h3>
+                            <p>Potencia tus habilidades mágicas y utilidad de combate. Excelente para magos y campeones de habilidades.</p>
+                            <div class="card-stats">
+                                <span class="stat">🔮 Poder Mágico</span>
+                                <span class="stat">⭐ Utilidad</span>
+                            </div>
+                        </div>
+                    </a>
+                    
+                    <a th:href="@{/runas/valor}" class="runa-categoria-card valor">
+                        <div class="card-imagen">
+                            <img th:src="@{/img/1_Runas/Valor/runas-valor.jpg}" alt="Valor">
+                        </div>
+                        <div class="card-content">
+                            <h3>Valor</h3>
+                            <p>Incrementa tu resistencia y capacidades defensivas. Perfecta para tanques y campeones de soporte.</p>
+                            <div class="card-stats">
+                                <span class="stat">🛡️ Resistencia</span>
+                                <span class="stat">🤝 Soporte</span>
+                            </div>
+                        </div>
+                    </a>
+                    
+                    <a th:href="@{/runas/inspiracion}" class="runa-categoria-card inspiracion">
+                        <div class="card-imagen">
+                            <img th:src="@{/img/1_Runas/Inspiracion/runas-inspiracion.jpg}" alt="Inspiración">
+                        </div>
+                        <div class="card-content">
+                            <h3>Inspiración</h3>
+                            <p>Ofrece utilidades únicas y opciones creativas de juego. Ideal para estrategias no convencionales.</p>
+                            <div class="card-stats">
+                                <span class="stat">🎯 Creatividad</span>
+                                <span class="stat">🔧 Utilidad Única</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
                 
-                <a th:href="@{/runas/brujeria}" class="acceso-card runa-brujeria">
-                    <img th:src="@{/img/1_Runas/Brujeria/runas-brujeria.jpg}" alt="Brujería" class="acceso-img">
-                    <h3>Brujería</h3>
-                    <p>Potencia tus habilidades mágicas y utilidad. Excelente para magos y campeones de habilidades.</p>
-                </a>
-                
-                <a th:href="@{/runas/valor}" class="acceso-card runa-valor">
-                    <img th:src="@{/img/1_Runas/Valor/runas-valor.jpg}" alt="Valor" class="acceso-img">
-                    <h3>Valor</h3>
-                    <p>Incrementa tu resistencia y capacidades defensivas. Perfecta para tanques y supports.</p>
-                </a>
-                
-                <a th:href="@{/runas/inspiracion}" class="acceso-card runa-inspiracion">
-                    <img th:src="@{/img/1_Runas/Inspiracion/runas-inspiracion.jpg}" alt="Inspiración" class="acceso-img">
-                    <h3>Inspiración</h3>
-                    <p>Ofrece utilidades únicas y opciones creativas. Ideal para estrategias no convencionales.</p>
-                </a>
+                <div class="runas-info">
+                    <h3>¿Cómo usar las Runas?</h3>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-number">1</div>
+                            <h4>Elige tu Árbol Principal</h4>
+                            <p>Selecciona la categoría que mejor complemente tu campeón y estilo de juego.</p>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-number">2</div>
+                            <h4>Escoge una Runa Clave</h4>
+                            <p>La runa más importante que definirá tu estrategia principal en la partida.</p>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-number">3</div>
+                            <h4>Completa tu Build</h4>
+                            <p>Añade runas secundarias y estadísticas adicionales para optimizar tu rendimiento.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
     </main>

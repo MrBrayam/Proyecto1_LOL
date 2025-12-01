@@ -48,48 +48,6 @@ public class WebController {
         }
     }
 
-    @GetMapping("/runas")
-    public String runas(Model model) {
-        model.addAttribute("title", "Runas de League of Legends");
-        model.addAttribute("description", "Conoce todas las runas disponibles para personalizar tu juego");
-        return "runas";
-    }
-
-    @GetMapping("/runas/precision")
-    public String runasPrecision(Model model) {
-        model.addAttribute("title", "Runas de Precisión");
-        model.addAttribute("description", "Runas enfocadas en ataques sostenidos y daño a distancia");
-        return "precision";
-    }
-
-    @GetMapping("/runas/dominacion")
-    public String runasDominacion(Model model) {
-        model.addAttribute("title", "Runas de Dominación");
-        model.addAttribute("description", "Runas enfocadas en explosiones de daño y caza");
-        return "dominacion";
-    }
-
-    @GetMapping("/runas/brujeria")
-    public String runasBrujeria(Model model) {
-        model.addAttribute("title", "Runas de Brujería");
-        model.addAttribute("description", "Runas enfocadas en habilidades y maná");
-        return "brujeria";
-    }
-
-    @GetMapping("/runas/valor")
-    public String runasValor(Model model) {
-        model.addAttribute("title", "Runas de Valor");
-        model.addAttribute("description", "Runas enfocadas en durabilidad y control de masas");
-        return "valor";
-    }
-
-    @GetMapping("/runas/inspiracion")
-    public String runasInspiracion(Model model) {
-        model.addAttribute("title", "Runas de Inspiración");
-        model.addAttribute("description", "Runas que rompen las reglas del juego");
-        return "inspiracion";
-    }
-
     @GetMapping("/contacto")
     public String contacto(Model model) {
         model.addAttribute("title", "Contacto");

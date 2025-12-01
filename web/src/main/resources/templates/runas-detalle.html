@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="'Runas de ' + ${categoria} + ' - League of Legends'">Runas - League of Legends</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/normalize.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/base.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/runas.css}">
+</head>
+<body>
+    <div th:replace="~{fragments/header :: header}"></div>
+
+    <main>
+        <div class="runas-detalle-hero" th:style="'--color-categoria: ' + ${color} + '; background-image: url(' + ${imagenPrincipal} + ')'">
+            <div class="hero-content">
+                <h1 class="categoria-titulo" th:text="'Runas de ' + ${categoria}">Runas de Precisión</h1>
+                <p class="categoria-descripcion" th:text="${descripcion}">Descripción de la categoría</p>
+            </div>
+        </div>
+
+        <div class="runas-sections">
+            <!-- Runas Clave -->
+            <div class="runas-section" th:if="${!#lists.isEmpty(runasClaves)}">
+                <h2 class="section-titulo" th:style="'color: ' + ${color} + '; border-bottom-color: ' + ${color}">Runas Clave</h2>
+                <div class="runas-grid">
+                    <div class="runa-card" th:each="runa : ${runasClaves}">
+                        <div class="runa-header">
+                            <img th:src="${runa.imagen}" th:alt="${runa.nombre}" class="runa-imagen" th:style="'border-color: ' + ${color}">
+                            <h3 class="runa-nombre" th:text="${runa.nombre}">Nombre de la Runa</h3>
+                        </div>
+                        <p class="runa-descripcion" th:text="${runa.descripcion}">Descripción de la runa</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Segunda Fila de Runas -->
+            <div class="runas-section" th:if="${!#lists.isEmpty(runasSegundaFila)}">
+                <h2 class="section-titulo" th:style="'color: ' + ${color} + '; border-bottom-color: ' + ${color}">Segunda Fila de Runas</h2>
+                <div class="runas-grid">
+                    <div class="runa-card" th:each="runa : ${runasSegundaFila}">
+                        <div class="runa-header">
+                            <img th:src="${runa.imagen}" th:alt="${runa.nombre}" class="runa-imagen" th:style="'border-color: ' + ${color}">
+                            <h3 class="runa-nombre" th:text="${runa.nombre}">Nombre de la Runa</h3>
+                        </div>
+                        <p class="runa-descripcion" th:text="${runa.descripcion}">Descripción de la runa</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tercera Fila de Runas -->
+            <div class="runas-section" th:if="${!#lists.isEmpty(runasTerceraFila)}">
+                <h2 class="section-titulo" th:style="'color: ' + ${color} + '; border-bottom-color: ' + ${color}">Tercera Fila de Runas</h2>
+                <div class="runas-grid">
+                    <div class="runa-card" th:each="runa : ${runasTerceraFila}">
+                        <div class="runa-header">
+                            <img th:src="${runa.imagen}" th:alt="${runa.nombre}" class="runa-imagen" th:style="'border-color: ' + ${color}">
+                            <h3 class="runa-nombre" th:text="${runa.nombre}">Nombre de la Runa</h3>
+                        </div>
+                        <p class="runa-descripcion" th:text="${runa.descripcion}">Descripción de la runa</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cuarta Fila de Runas -->
+            <div class="runas-section" th:if="${!#lists.isEmpty(runasCuartaFila)}">
+                <h2 class="section-titulo" th:style="'color: ' + ${color} + '; border-bottom-color: ' + ${color}">Cuarta Fila de Runas</h2>
+                <div class="runas-grid">
+                    <div class="runa-card" th:each="runa : ${runasCuartaFila}">
+                        <div class="runa-header">
+                            <img th:src="${runa.imagen}" th:alt="${runa.nombre}" class="runa-imagen" th:style="'border-color: ' + ${color}">
+                            <h3 class="runa-nombre" th:text="${runa.nombre}">Nombre de la Runa</h3>
+                        </div>
+                        <p class="runa-descripcion" th:text="${runa.descripcion}">Descripción de la runa</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="btn-container">
+                <a th:href="@{/runas}" class="volver-btn" th:style="'background: ' + ${color}">← Volver a Runas</a>
+            </div>
+        </div>
+    </main>
+
+    <div th:replace="~{fragments/header :: footer}"></div>
+    
+    <script type="text/javascript" th:src="@{/js/jquery-3.7.1.min.js}"></script>
+</body>
+</html>

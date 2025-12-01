@@ -6,102 +6,7 @@
     <title>Administrar Campeones - League of Legends</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/normalize.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/css/base.css}">
-    <style>
-        body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        .admin-container { 
-            max-width: 1200px; 
-            margin: 2rem auto; 
-            padding: 2rem; 
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        }
-        
-        h1 {
-            color: #2c3e50;
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-        
-        .stats-container {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-        
-        .stat-card {
-            flex: 1;
-            padding: 1.5rem;
-            border-radius: 10px;
-            text-align: center;
-            color: white;
-            font-weight: bold;
-        }
-        
-        .stat-total { background: #74b9ff; }
-        .stat-active { background: #00b894; }
-        .stat-inactive { background: #fd79a8; }
-        
-        .admin-table { 
-            width: 100%; 
-            border-collapse: collapse; 
-            background: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-        
-        .admin-table th { 
-            padding: 1rem; 
-            background: #667eea;
-            color: white;
-            text-align: left;
-        }
-        
-        .admin-table td { 
-            padding: 1rem; 
-            border-bottom: 1px solid #eee; 
-        }
-        
-        .btn { 
-            padding: 0.5rem 1rem; 
-            margin: 0.25rem; 
-            text-decoration: none; 
-            border-radius: 5px; 
-            display: inline-block; 
-            color: white;
-            font-weight: bold;
-        }
-        
-        .btn-primary { background: #007bff; }
-        .btn-warning { background: #ffc107; color: #000; }
-        .btn-danger { background: #dc3545; }
-        .btn-success { background: #28a745; }
-        .btn-secondary { background: #6c757d; }
-        
-        .campeon-inactivo { opacity: 0.6; }
-        
-        .estado-activo {
-            background: #28a745;
-            color: white;
-            padding: 0.3rem 0.8rem;
-            border-radius: 15px;
-            font-size: 0.8rem;
-        }
-        
-        .estado-inactivo {
-            background: #dc3545;
-            color: white;
-            padding: 0.3rem 0.8rem;
-            border-radius: 15px;
-            font-size: 0.8rem;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin.css}">
 </head>
 <body>
     <div th:replace="~{fragments/header :: header}"></div>
@@ -110,7 +15,7 @@
         <div class="admin-container">
             <h1>Administrar Campeones</h1>
             
-            <div style="margin-bottom: 2rem; text-align: center;">
+            <div class="admin-nav">
                 <a th:href="@{/admin/campeones/form}" class="btn btn-primary">Agregar Nuevo Campeón</a>
                 <a th:href="@{/}" class="btn btn-secondary">Volver al Sitio</a>
             </div>
@@ -133,8 +38,8 @@
                             <img th:if="${campeon.rutaimg}" 
                                  th:src="${campeon.rutaimg}" 
                                  alt="Imagen" 
-                                 style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;">
-                            <span th:unless="${campeon.rutaimg}" style="color: #999; font-style: italic;">Sin imagen</span>
+                                 class="campeon-thumb">
+                            <span th:unless="${campeon.rutaimg}" class="sin-imagen">Sin imagen</span>
                         </td>
                         <td th:text="${campeon.nombreCampeon}">Nombre</td>
                         <td th:text="${campeon.descripcionCampeon}">Descripción</td>
@@ -159,7 +64,7 @@
                 </tbody>
             </table>
 
-            <div th:if="${#lists.isEmpty(campeones)}" style="text-align: center; padding: 2rem;">
+            <div th:if="${#lists.isEmpty(campeones)}" class="no-data-message">
                 <p>No hay campeones registrados</p>
                 <a th:href="@{/admin/campeones/form}" class="btn btn-primary">Agregar el primer campeón</a>
             </div>
