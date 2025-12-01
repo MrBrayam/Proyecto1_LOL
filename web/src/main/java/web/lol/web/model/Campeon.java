@@ -23,6 +23,9 @@ public class Campeon {
     @Column(name = "Estado")
     private Integer estado = 1;
 
+    @Column(name = "rutaimg", length = 200)
+    private String rutaimg;
+
     // Campos adicionales para la aplicación web (no mapeados a la BD)
     @Transient
     private String imagenPath;
@@ -39,9 +42,10 @@ public class Campeon {
         this.estado = 1;
     }
 
-    public Campeon(String nombreCampeon, String descripcionCampeon, String imagenPath, String letra) {
+    public Campeon(String nombreCampeon, String descripcionCampeon, String rutaimg, String imagenPath, String letra) {
         this.nombreCampeon = nombreCampeon;
         this.descripcionCampeon = descripcionCampeon;
+        this.rutaimg = rutaimg;
         this.estado = 1;
         this.imagenPath = imagenPath;
         this.letra = letra;
@@ -80,6 +84,14 @@ public class Campeon {
         this.estado = estado;
     }
 
+    public String getRutaimg() {
+        return rutaimg;
+    }
+
+    public void setRutaimg(String rutaimg) {
+        this.rutaimg = rutaimg;
+    }
+
     public String getImagenPath() {
         return imagenPath;
     }
@@ -94,21 +106,5 @@ public class Campeon {
 
     public void setLetra(String letra) {
         this.letra = letra;
-    }
-
-    public String getNombre() {
-        return nombreCampeon;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombreCampeon = nombre;
-    }
-
-    public String getTitulo() {
-        return descripcionCampeon;
-    }
-
-    public void setTitulo(String titulo) {
-        this.descripcionCampeon = titulo;
     }
 }

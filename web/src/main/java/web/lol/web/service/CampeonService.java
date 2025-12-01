@@ -61,10 +61,16 @@ public class CampeonService {
         // Asignar letra
         campeon.setLetra(nombre.substring(0, 1).toUpperCase());
         
-        // Asignar ruta de imagen basada en el nombre del campeón
-        String nombreCarpeta = limpiarNombreParaCarpeta(nombre);
-        String nombreArchivo = limpiarNombreParaArchivo(nombre);
-        campeon.setImagenPath("/img/" + nombreCarpeta + "/Original" + nombreArchivo + ".jpg");
+        // Priorizar imagen subida por admin, sino usar imagen por defecto
+        if (campeon.getRutaimg() != null && !campeon.getRutaimg().trim().isEmpty()) {
+            // Usar imagen subida desde el admin
+            campeon.setImagenPath(campeon.getRutaimg());
+        } else {
+            // Usar imagen por defecto basada en el nombre del campeón
+            String nombreCarpeta = limpiarNombreParaCarpeta(nombre);
+            String nombreArchivo = limpiarNombreParaArchivo(nombre);
+            campeon.setImagenPath("/img/" + nombreCarpeta + "/Original" + nombreArchivo + ".jpg");
+        }
     }
     
     private String limpiarNombreParaCarpeta(String nombre) {

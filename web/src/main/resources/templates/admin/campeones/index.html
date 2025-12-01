@@ -119,6 +119,7 @@
                 <thead>
                     <tr>
                         <th>ID</th>
+                        <th>Imagen</th>
                         <th>Nombre</th>
                         <th>Descripción</th>
                         <th>Estado</th>
@@ -128,6 +129,13 @@
                 <tbody>
                     <tr th:each="campeon : ${campeones}" th:class="${campeon.estado == 0} ? 'campeon-inactivo' : ''">
                         <td th:text="${campeon.idCampeon}">ID</td>
+                        <td>
+                            <img th:if="${campeon.rutaimg}" 
+                                 th:src="${campeon.rutaimg}" 
+                                 alt="Imagen" 
+                                 style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;">
+                            <span th:unless="${campeon.rutaimg}" style="color: #999; font-style: italic;">Sin imagen</span>
+                        </td>
                         <td th:text="${campeon.nombreCampeon}">Nombre</td>
                         <td th:text="${campeon.descripcionCampeon}">Descripción</td>
                         <td>
