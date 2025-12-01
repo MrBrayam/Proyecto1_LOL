@@ -19,7 +19,7 @@ public class AdminCampeonController {
 
     @GetMapping
     public String listarCampeones(Model model) {
-        List<Campeon> campeones = campeonRepository.findAll();
+        List<Campeon> campeones = campeonRepository.findAllForAdmin();
         model.addAttribute("campeones", campeones);
         return "admin/campeones/index";
     }
@@ -94,11 +94,36 @@ public class AdminCampeonController {
         }
     }
 
-    @GetMapping("/eliminar/{id}")
-    public String eliminar(@PathVariable String id) {
-        // Con @SQLDelete, esto ejecutará UPDATE en lugar de DELETE
-        campeonRepository.deleteById(id);
-        System.out.println("Campeón eliminado (borrado lógico): " + id);
+    @GetMapping("/desactivar/{id}")
+    public String desactivar(@PathVariable String id) {
+        try {
+            System.out.println("=== DESACTIVANDO CAMPEÓN ===");
+            System.out.println("ID: " + id);
+            
+            int filasAfectadas = campeonRepository.desactivarCampeon(id);
+            System.out.println("Filas afectadas: " + filasAfectadas);
+            
+        } catch (Exception e) {
+            System.err.println("ERROR AL DESACTIVAR: " + e.getMessage());
+            e.printStackTrace();
+        }
         return "redirect:/admin/campeones";
+    }
+
+    @GetMapping("/activar/{id}")
+    public String activar(@PathVariable String id) {
+        try {
+            System.out.println("=== INTENTANDO ACTIVAR CAMPEÓN ===");
+            System.out.println("ID: " + id);
+            
+            // Enfoque más simple: usar JDBC directo
+            campeonRepository.activarCampeon(id);
+            System.out.println("Comando de activación enviado");
+            
+        } catch (Exception e) {
+            System.err.println("ERROR AL ACTIVAR: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return "redirect:/admin/campeones?mensaje=activacion-intentada";
     }
 }

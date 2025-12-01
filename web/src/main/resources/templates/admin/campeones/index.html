@@ -7,15 +7,100 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/normalize.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/css/base.css}">
     <style>
-        .admin-container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
-        .admin-table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
-        .admin-table th, .admin-table td { padding: 0.75rem; border: 1px solid #ddd; text-align: left; }
-        .admin-table th { background-color: #f4f4f4; }
-        .btn { padding: 0.5rem 1rem; margin: 0.25rem; text-decoration: none; border-radius: 4px; display: inline-block; }
-        .btn-primary { background: #007bff; color: white; }
-        .btn-warning { background: #ffc107; color: black; }
-        .btn-danger { background: #dc3545; color: white; }
-        .btn:hover { opacity: 0.8; }
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .admin-container { 
+            max-width: 1200px; 
+            margin: 2rem auto; 
+            padding: 2rem; 
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .stats-container {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            flex: 1;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .stat-total { background: #74b9ff; }
+        .stat-active { background: #00b894; }
+        .stat-inactive { background: #fd79a8; }
+        
+        .admin-table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .admin-table th { 
+            padding: 1rem; 
+            background: #667eea;
+            color: white;
+            text-align: left;
+        }
+        
+        .admin-table td { 
+            padding: 1rem; 
+            border-bottom: 1px solid #eee; 
+        }
+        
+        .btn { 
+            padding: 0.5rem 1rem; 
+            margin: 0.25rem; 
+            text-decoration: none; 
+            border-radius: 5px; 
+            display: inline-block; 
+            color: white;
+            font-weight: bold;
+        }
+        
+        .btn-primary { background: #007bff; }
+        .btn-warning { background: #ffc107; color: #000; }
+        .btn-danger { background: #dc3545; }
+        .btn-success { background: #28a745; }
+        .btn-secondary { background: #6c757d; }
+        
+        .campeon-inactivo { opacity: 0.6; }
+        
+        .estado-activo {
+            background: #28a745;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+        }
+        
+        .estado-inactivo {
+            background: #dc3545;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+        }
     </style>
 </head>
 <body>
@@ -25,9 +110,9 @@
         <div class="admin-container">
             <h1>Administrar Campeones</h1>
             
-            <div style="margin-bottom: 1rem;">
+            <div style="margin-bottom: 2rem; text-align: center;">
                 <a th:href="@{/admin/campeones/form}" class="btn btn-primary">Agregar Nuevo Campeón</a>
-                <a th:href="@{/}" class="btn" style="background: #6c757d; color: white;">Volver al Sitio</a>
+                <a th:href="@{/}" class="btn btn-secondary">Volver al Sitio</a>
             </div>
 
             <table class="admin-table">
@@ -41,19 +126,26 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="campeon : ${campeones}">
+                    <tr th:each="campeon : ${campeones}" th:class="${campeon.estado == 0} ? 'campeon-inactivo' : ''">
                         <td th:text="${campeon.idCampeon}">ID</td>
                         <td th:text="${campeon.nombreCampeon}">Nombre</td>
                         <td th:text="${campeon.descripcionCampeon}">Descripción</td>
                         <td>
-                            <span th:if="${campeon.estado == 1}" style="color: green;">Activo</span>
-                            <span th:if="${campeon.estado == 0}" style="color: red;">Inactivo</span>
+                            <span th:if="${campeon.estado == 1}" class="estado-activo">Activo</span>
+                            <span th:if="${campeon.estado == 0}" class="estado-inactivo">Inactivo</span>
                         </td>
                         <td>
                             <a th:href="@{'/admin/campeones/editar/' + ${campeon.idCampeon}}" class="btn btn-warning">Editar</a>
-                            <a th:href="@{'/admin/campeones/eliminar/' + ${campeon.idCampeon}}" 
+                            
+                            <a th:if="${campeon.estado == 1}"
+                               th:href="@{'/admin/campeones/desactivar/' + ${campeon.idCampeon}}" 
                                class="btn btn-danger"
-                               onclick="return confirm('¿Estás seguro de eliminar este campeón?')">Eliminar</a>
+                               onclick="return confirm('¿Desactivar este campeón? No se mostrará en la lista pública.')">Desactivar</a>
+                            
+                            <a th:if="${campeon.estado == 0}"
+                               th:href="@{'/admin/campeones/activar/' + ${campeon.idCampeon}}" 
+                               class="btn btn-success"
+                               onclick="return confirm('¿Activar este campeón? Se mostrará en la lista pública.')">Activar</a>
                         </td>
                     </tr>
                 </tbody>
