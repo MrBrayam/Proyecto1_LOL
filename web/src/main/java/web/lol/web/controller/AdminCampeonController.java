@@ -32,24 +32,22 @@ public class AdminCampeonController {
 
     @PostMapping("/create")
     public String crear(
-            @RequestParam("idCampeon") String idCampeon,
             @RequestParam("nombreCampeon") String nombreCampeon,
             @RequestParam("descripcionCampeon") String descripcionCampeon
     ) {
         System.out.println("=== CREANDO NUEVO CAMPEÓN ===");
-        System.out.println("ID: " + idCampeon);
         System.out.println("Nombre: " + nombreCampeon);
         System.out.println("Descripción: " + descripcionCampeon);
 
         try {
             Campeon campeon = new Campeon();
-            campeon.setIdCampeon(idCampeon);
+            // El ID se generará automáticamente por la base de datos
             campeon.setNombreCampeon(nombreCampeon);
             campeon.setDescripcionCampeon(descripcionCampeon);
             campeon.setEstado(1);
 
             campeonRepository.save(campeon);
-            System.out.println("Campeón guardado exitosamente");
+            System.out.println("Campeón guardado exitosamente con ID: " + campeon.getIdCampeon());
             
             return "redirect:/admin/campeones";
 
@@ -61,7 +59,7 @@ public class AdminCampeonController {
     }
 
     @GetMapping("/editar/{id}")
-    public String formularioEditar(@PathVariable String id, Model model) {
+    public String formularioEditar(@PathVariable Integer id, Model model) {
         Optional<Campeon> campeonOpt = campeonRepository.findById(id);
         if (campeonOpt.isPresent()) {
             model.addAttribute("campeon", campeonOpt.get());
@@ -72,7 +70,7 @@ public class AdminCampeonController {
 
     @PostMapping("/update")
     public String actualizar(
-            @RequestParam("idCampeon") String idCampeon,
+            @RequestParam("idCampeon") Integer idCampeon,
             @RequestParam("nombreCampeon") String nombreCampeon,
             @RequestParam("descripcionCampeon") String descripcionCampeon
     ) {
@@ -95,7 +93,7 @@ public class AdminCampeonController {
     }
 
     @GetMapping("/desactivar/{id}")
-    public String desactivar(@PathVariable String id) {
+    public String desactivar(@PathVariable Integer id) {
         try {
             System.out.println("=== DESACTIVANDO CAMPEÓN ===");
             System.out.println("ID: " + id);
@@ -111,12 +109,11 @@ public class AdminCampeonController {
     }
 
     @GetMapping("/activar/{id}")
-    public String activar(@PathVariable String id) {
+    public String activar(@PathVariable Integer id) {
         try {
             System.out.println("=== INTENTANDO ACTIVAR CAMPEÓN ===");
             System.out.println("ID: " + id);
             
-            // Enfoque más simple: usar JDBC directo
             campeonRepository.activarCampeon(id);
             System.out.println("Comando de activación enviado");
             

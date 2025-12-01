@@ -10,7 +10,7 @@ import web.lol.web.model.Campeon;
 import java.util.List;
 
 @Repository
-public interface CampeonRepository extends JpaRepository<Campeon, String> {
+public interface CampeonRepository extends JpaRepository<Campeon, Integer> {
     
     // Con @Where, automáticamente filtra por estado=1
     List<Campeon> findAllByOrderByNombreCampeon();
@@ -31,11 +31,11 @@ public interface CampeonRepository extends JpaRepository<Campeon, String> {
     @Modifying
     @Transactional
     @Query(value = "UPDATE campeones SET Estado = 1 WHERE ID_Campeon = :id", nativeQuery = true)
-    int activarCampeon(@Param("id") String id);
+    int activarCampeon(@Param("id") Integer id);
     
     // También agregar método para desactivar por consistencia
     @Modifying
     @Transactional
     @Query(value = "UPDATE campeones SET Estado = 0 WHERE ID_Campeon = :id", nativeQuery = true)
-    int desactivarCampeon(@Param("id") String id);
+    int desactivarCampeon(@Param("id") Integer id);
 }

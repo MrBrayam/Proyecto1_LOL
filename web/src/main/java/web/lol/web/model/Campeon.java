@@ -10,8 +10,9 @@ import jakarta.persistence.*;
 @Where(clause = "Estado=1")
 public class Campeon {
     @Id
-    @Column(name = "ID_Campeon", length = 4)
-    private String idCampeon;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID_Campeon")
+    private Integer idCampeon;
 
     @Column(name = "Nombre_Campeon", length = 50, nullable = false)
     private String nombreCampeon;
@@ -32,15 +33,13 @@ public class Campeon {
     // Constructores
     public Campeon() {}
 
-    public Campeon(String idCampeon, String nombreCampeon, String descripcionCampeon) {
-        this.idCampeon = idCampeon;
+    public Campeon(String nombreCampeon, String descripcionCampeon) {
         this.nombreCampeon = nombreCampeon;
         this.descripcionCampeon = descripcionCampeon;
         this.estado = 1;
     }
 
-    public Campeon(String idCampeon, String nombreCampeon, String descripcionCampeon, String imagenPath, String letra) {
-        this.idCampeon = idCampeon;
+    public Campeon(String nombreCampeon, String descripcionCampeon, String imagenPath, String letra) {
         this.nombreCampeon = nombreCampeon;
         this.descripcionCampeon = descripcionCampeon;
         this.estado = 1;
@@ -49,11 +48,11 @@ public class Campeon {
     }
 
     // Getters y setters
-    public String getIdCampeon() {
+    public Integer getIdCampeon() {
         return idCampeon;
     }
 
-    public void setIdCampeon(String idCampeon) {
+    public void setIdCampeon(Integer idCampeon) {
         this.idCampeon = idCampeon;
     }
 

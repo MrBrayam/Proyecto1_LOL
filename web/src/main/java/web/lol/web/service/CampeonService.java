@@ -62,16 +62,29 @@ public class CampeonService {
         campeon.setLetra(nombre.substring(0, 1).toUpperCase());
         
         // Asignar ruta de imagen basada en el nombre del campeón
-        String nombreLimpio = limpiarNombreParaRuta(nombre);
-        campeon.setImagenPath("/img/" + nombreLimpio + "/Original" + nombreLimpio + ".jpg");
+        String nombreCarpeta = limpiarNombreParaCarpeta(nombre);
+        String nombreArchivo = limpiarNombreParaArchivo(nombre);
+        campeon.setImagenPath("/img/" + nombreCarpeta + "/Original" + nombreArchivo + ".jpg");
     }
     
-    private String limpiarNombreParaRuta(String nombre) {
-        // Reemplazar caracteres especiales y espacios
-        return nombre.replace("'", "")
-                    .replace(".", "")
-                    .replace(" ", "_")
-                    .replace("'", "");
+    private String limpiarNombreParaCarpeta(String nombre) {
+        // Para nombres de carpetas: mantener caracteres especiales pero reemplazar espacios con _
+        return nombre.replace(" ", "_");
+    }
+    
+    private String limpiarNombreParaArchivo(String nombre) {
+        // Para nombres de archivos: casos especiales
+        switch (nombre) {
+            case "Aurelion Sol":
+                return "Aurelion Sol";  // Mantiene el espacio en el archivo
+            case "Dr. Mundo":
+                return "Dr.Mundo";      // Sin espacio después del punto
+            case "Nunu y Willump":
+                return "Nunu&Willump";  // Usa & en lugar de y
+            default:
+                // Para otros casos, mantener caracteres especiales
+                return nombre;
+        }
     }
     
     @PostConstruct
