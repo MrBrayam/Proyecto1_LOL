@@ -6,13 +6,13 @@
     <title th:text="${admin.idAdmin != null ? 'Editar Administrador' : 'Nuevo Administrador'}">Formulario Administrador</title>
     <link rel="icon" type="image/svg+xml" th:href="@{/favicon.svg}">
     <link rel="shortcut icon" type="image/svg+xml" th:href="@{/favicon.svg}">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/normalize.css?v=1.0}">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/base.css?v=1.0}">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/admin.css?v=1.0}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/normalize.css?v=4.0}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/base.css?v=4.0}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin.css?v=4.0}">
 </head>
-<body>
+<body class="admin-form-container">
     <main>
-        <div class="form-container admin-form-container">
+        <div class="form-container">
             <h1 th:text="${admin.idAdmin != null ? 'Editar Administrador' : 'Nuevo Administrador'}">Formulario Administrador</h1>
             
             <!-- Mensajes de éxito o error -->
