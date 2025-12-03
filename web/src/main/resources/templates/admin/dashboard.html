@@ -6,14 +6,14 @@
     <title>Dashboard Administrativo - League of Legends</title>
     <link rel="icon" type="image/svg+xml" th:href="@{/favicon.svg}">
     <link rel="shortcut icon" type="image/svg+xml" th:href="@{/favicon.svg}">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/normalize.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/base.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/admin.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/normalize.css?v=1.0}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/base.css?v=1.0}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin.css?v=1.0}">
 </head>
 <body class="admin-body">
     <div class="dashboard-header">
         <div class="user-info">
-            👋 Bienvenido, <span th:text="${admin.nombre}">Administrador</span>
+            Bienvenido, <span th:text="${admin.nombre}">Administrador</span>
         </div>
         <h1>Panel de Administración</h1>
         <p>Gestiona el contenido de League of Legends</p>
@@ -23,7 +23,7 @@
         <div class="admin-options">
             <!-- Gestión de Campeones -->
             <a href="/admin/campeones" class="admin-option-card">
-                <span class="option-icon">⚔️</span>
+                <span class="option-icon">CAM</span>
                 <h3 class="option-title">Gestionar Campeones</h3>
                 <p class="option-description">
                     Administra la lista de campeones: agregar nuevos, editar información, 
@@ -34,7 +34,7 @@
             
             <!-- Gestión de Administradores -->
             <a href="/admin/admins" class="admin-option-card">
-                <span class="option-icon">👥</span>
+                <span class="option-icon">ADM</span>
                 <h3 class="option-title">Gestionar Administradores</h3>
                 <p class="option-description">
                     Administra las cuentas de administrador: crear nuevos usuarios, 
@@ -59,7 +59,7 @@
         <div class="logout-section">
             <a href="/admin/logout" class="logout-btn" 
                onclick="return confirm('¿Estás seguro de que quieres cerrar sesión?')">
-                🚪 Cerrar Sesión
+                Cerrar Sesión
             </a>
         </div>
     </div>

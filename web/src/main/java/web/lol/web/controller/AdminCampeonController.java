@@ -47,10 +47,51 @@ public class AdminCampeonController {
         }
         
         try {
-            // Crear objeto Pageable para paginación
-            Pageable pageable = PageRequest.of(page, size, Sort.by("nombreCampeon"));
-            Page<Campeon> campeonesPage = campeonRepository.findAllForAdminPaginated(pageable);
+            // Validar parámetros
+            if (page < 0) page = 0;
+            if (size <= 0 || size > 100) size = 10;
             
+            System.out.println("=== DEBUG PAGINACIÓN ===");
+            System.out.println("Page solicitada: " + page);
+            System.out.println("Size solicitado: " + size);
+            
+            // Crear objeto Pageable para paginación
+            Pageable pageable = PageRequest.of(page, size);
+            
+            // Usar consulta nativa que ignora @Where
+            Page<Campeon> campeonesPage;
+            
+            try {
+                campeonesPage = campeonRepository.findAllForAdminPaginatedNative(pageable);
+                
+                System.out.println("=== PAGINACIÓN EXITOSA ===");
+                System.out.println("Página: " + page + ", Tamaño: " + size);
+                System.out.println("Total elementos: " + campeonesPage.getTotalElements());
+                System.out.println("Total páginas: " + campeonesPage.getTotalPages());
+                System.out.println("Elementos en esta página: " + campeonesPage.getContent().size());
+                System.out.println("Incluye desactivados: " + 
+                    campeonesPage.getContent().stream().anyMatch(c -> c.getEstado() == 0));
+                
+            } catch (Exception e) {
+                System.err.println("ERROR en paginación nativa: " + e.getMessage());
+                e.printStackTrace();
+                
+                // Fallback: Lista completa sin paginación
+                List<Campeon> campeones = campeonRepository.findAllForAdmin();
+                model.addAttribute("campeones", campeones);
+                model.addAttribute("totalElements", campeones.size());
+                model.addAttribute("currentPage", 0);
+                model.addAttribute("totalPages", 1);
+                model.addAttribute("size", campeones.size());
+                model.addAttribute("error", "Error en la paginación, mostrando todos los elementos");
+                
+                System.out.println("Fallback activado, mostrando " + campeones.size() + " campeones");
+                System.out.println("Incluye desactivados: " + 
+                    campeones.stream().anyMatch(c -> c.getEstado() == 0));
+                return "admin/campeones/index";
+            }
+            
+            // Agregar todos los atributos al modelo
             model.addAttribute("campeonesPage", campeonesPage);
             model.addAttribute("campeones", campeonesPage.getContent());
             model.addAttribute("currentPage", page);
@@ -58,12 +99,36 @@ public class AdminCampeonController {
             model.addAttribute("totalElements", campeonesPage.getTotalElements());
             model.addAttribute("size", size);
             
+            System.out.println("Total elements: " + campeonesPage.getTotalElements());
+            System.out.println("Total pages: " + campeonesPage.getTotalPages());
+            System.out.println("Content size: " + campeonesPage.getContent().size());
+            System.out.println("=== FIN DEBUG ===");
+            
             return "admin/campeones/index";
+            
         } catch (Exception e) {
-            System.err.println("Error al listar campeones: " + e.getMessage());
+            System.err.println("Error completo al listar campeones: " + e.getMessage());
             e.printStackTrace();
-            model.addAttribute("error", "Error al cargar los campeones");
-            return "admin/dashboard";
+            
+            // En caso de error total, usar lista simple sin paginación
+            try {
+                List<Campeon> campeones = campeonRepository.findAllForAdmin();
+                model.addAttribute("campeones", campeones);
+                model.addAttribute("totalElements", campeones.size());
+                model.addAttribute("currentPage", 0);
+                model.addAttribute("totalPages", 1);
+                model.addAttribute("size", campeones.size());
+                model.addAttribute("error", "Error en la paginación, mostrando todos los elementos");
+                
+                System.out.println("Fallback activado, mostrando " + campeones.size() + " campeones");
+                return "admin/campeones/index";
+                
+            } catch (Exception e2) {
+                System.err.println("Error crítico al listar campeones: " + e2.getMessage());
+                e2.printStackTrace();
+                model.addAttribute("error", "Error crítico al cargar los campeones: " + e2.getMessage());
+                return "admin/dashboard";
+            }
         }
     }
 

@@ -6,14 +6,23 @@
     <title th:text="${campeon.idCampeon != null ? 'Editar Campeón' : 'Nuevo Campeón'}">Formulario Campeón</title>
     <link rel="icon" type="image/svg+xml" th:href="@{/favicon.svg}">
     <link rel="shortcut icon" type="image/svg+xml" th:href="@{/favicon.svg}">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/normalize.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/base.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/admin.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/normalize.css?v=2.0}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/base.css?v=2.0}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin.css?v=2.0}">
 </head>
-<body>
+<body class="admin-form-container">
     <main>
-        <div class="form-container admin-form-container">
+        <div class="form-container">
             <h1 th:text="${campeon.idCampeon != null ? 'Editar Campeón' : 'Nuevo Campeón'}">Formulario Campeón</h1>
+            
+            <!-- Mensajes de éxito o error -->
+            <div th:if="${mensaje}" class="alert alert-success">
+                <span th:text="${mensaje}">Mensaje de éxito</span>
+            </div>
+            
+            <div th:if="${error}" class="alert alert-error">
+                <span th:text="${error}">Mensaje de error</span>
+            </div>
             
             <form th:action="${campeon.idCampeon != null ? '/admin/campeones/update' : '/admin/campeones/create'}" method="post" enctype="multipart/form-data">
                 
@@ -33,14 +42,14 @@
                     <label for="nombreCampeon">Nombre del Campeón: *</label>
                     <input type="text" id="nombreCampeon" name="nombreCampeon" 
                            th:value="${campeon.nombreCampeon}" 
-                           placeholder="Ej: Aatrox" maxlength="50" required>
+                           placeholder="Ej: Aatrox" maxlength="50" required class="form-control">
                 </div>
 
                 <div class="form-group">
                     <label for="descripcionCampeon">Descripción:</label>
                     <textarea id="descripcionCampeon" name="descripcionCampeon" 
                               placeholder="Ej: La Espada de los Mundos Sombríos" 
-                              maxlength="150" th:text="${campeon.descripcionCampeon}"></textarea>
+                              maxlength="150" th:text="${campeon.descripcionCampeon}" class="form-control"></textarea>
                 </div>
 
                 <div class="form-group">

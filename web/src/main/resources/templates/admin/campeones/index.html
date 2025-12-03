@@ -6,18 +6,28 @@
     <title>Administrar Campeones - League of Legends</title>
     <link rel="icon" type="image/svg+xml" th:href="@{/favicon.svg}">
     <link rel="shortcut icon" type="image/svg+xml" th:href="@{/favicon.svg}">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/normalize.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/base.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/admin.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/normalize.css?v=4.0}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/base.css?v=4.0}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin.css?v=4.0}">
 </head>
 <body class="admin-body">
     <main>
         <div class="admin-container">
-            <h1>⚔️ Administrar Campeones</h1>
+            <h1>Administrar Campeones</h1>
             
             <div class="admin-nav">
                 <a th:href="@{/admin/campeones/form}" class="btn btn-primary">Agregar Nuevo Campeón</a>
+                <a th:href="@{/admin/dashboard}" class="btn btn-secondary">Volver al Dashboard</a>
                 <a th:href="@{/}" class="btn btn-secondary">Volver al Sitio</a>
+            </div>
+
+            <!-- Mensajes de éxito o error -->
+            <div th:if="${mensaje}" class="alert alert-success">
+                <span th:text="${mensaje}">Mensaje de éxito</span>
+            </div>
+            
+            <div th:if="${error}" class="alert alert-error">
+                <span th:text="${error}">Mensaje de error</span>
             </div>
 
             <table class="admin-table">
@@ -70,22 +80,22 @@
             </div>
             
             <!-- Información de paginación -->
-            <div th:if="${!#lists.isEmpty(campeones)}" class="pagination-info">
-                <p>Mostrando <span th:text="${campeonesPage.numberOfElements}">0</span> de 
-                   <span th:text="${totalElements}">0</span> campeones</p>
+            <div th:if="${totalElements != null and totalElements > 0}" class="pagination-info">
+                <p>Mostrando <span th:text="${#lists.size(campeones)}">0</span> de 
+                   <span th:text="${totalElements}">0</span> campeones (Página <span th:text="${(currentPage ?: 0) + 1}">1</span> de <span th:text="${totalPages ?: 1}">1</span>)</p>
             </div>
             
             <!-- Controles de paginación -->
-            <div th:if="${totalPages > 1}" class="pagination-container">
+            <div th:if="${totalPages != null and totalPages > 1}" class="pagination-container">
                 <nav class="pagination">
                     <!-- Botón anterior -->
                     <a th:if="${currentPage > 0}" 
                        th:href="@{/admin/campeones(page=${currentPage - 1}, size=${size})}" 
                        class="pagination-btn">« Anterior</a>
                     
-                    <!-- Números de página -->
+                    <!-- Números de página (limitados para responsive) -->
                     <span th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
-                          th:if="${i >= currentPage - 2 and i <= currentPage + 2}">
+                          th:if="${i >= (currentPage - 2 >= 0 ? currentPage - 2 : 0) and i <= (currentPage + 2 < totalPages ? currentPage + 2 : totalPages - 1)}">
                         <a th:if="${i != currentPage}" 
                            th:href="@{/admin/campeones(page=${i}, size=${size})}"
                            th:text="${i + 1}"

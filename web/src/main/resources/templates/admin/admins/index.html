@@ -6,19 +6,19 @@
     <title>Administrar Administradores - League of Legends</title>
     <link rel="icon" type="image/svg+xml" th:href="@{/favicon.svg}">
     <link rel="shortcut icon" type="image/svg+xml" th:href="@{/favicon.svg}">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/normalize.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/base.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/admin.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/normalize.css?v=1.0}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/base.css?v=1.0}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin.css?v=1.0}">
 </head>
 <body class="admin-body">
     <main>
         <div class="admin-container">
-            <h1>👥 Administrar Administradores</h1>
+            <h1>Administrar Administradores</h1>
             
             <div class="admin-nav">
                 <a th:href="@{/admin/admins/form}" class="btn btn-primary">+ Agregar Nuevo Administrador</a>
                 <a th:href="@{/admin/dashboard}" class="btn btn-secondary">← Volver al Dashboard</a>
-                <a th:href="@{/admin/logout}" class="btn btn-danger">🚪 Cerrar Sesión</a>
+                <a th:href="@{/admin/logout}" class="btn btn-danger">Cerrar Sesión</a>
             </div>
 
             <!-- Mensajes de éxito o error -->
@@ -53,19 +53,19 @@
                         </td>
                         <td class="acciones-cell">
                             <!-- Editar siempre disponible -->
-                            <a th:href="@{'/admin/admins/editar/' + ${admin.idAdmin}}" class="btn btn-warning btn-sm">✏️ Editar</a>
+                            <a th:href="@{'/admin/admins/editar/' + ${admin.idAdmin}}" class="btn btn-warning btn-sm">Editar</a>
                             
                             <!-- Activar solo si está inactivo -->
                             <a th:if="${admin.estado == 0}"
                                th:href="@{'/admin/admins/activar/' + ${admin.idAdmin}}" 
                                class="btn btn-success btn-sm"
-                               onclick="return confirm('¿Activar este administrador?')">✅ Activar</a>
+                               onclick="return confirm('¿Activar este administrador?')">Activar</a>
                             
                             <!-- Desactivar solo si NO es el usuario actual y está activo -->
                             <a th:if="${admin.estado == 1 and adminLogueado.idAdmin != admin.idAdmin}"
                                th:href="@{'/admin/admins/desactivar/' + ${admin.idAdmin}}" 
                                class="btn btn-danger btn-sm"
-                               onclick="return confirm('¿Desactivar este administrador? No podrá acceder al sistema.')">❌ Desactivar</a>
+                               onclick="return confirm('¿Desactivar este administrador? No podrá acceder al sistema.')">Desactivar</a>
                             
                             <!-- Mensaje para el usuario actual -->
                             <span th:if="${adminLogueado.idAdmin == admin.idAdmin}" 

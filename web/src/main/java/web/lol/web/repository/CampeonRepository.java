@@ -29,10 +29,14 @@ public interface CampeonRepository extends JpaRepository<Campeon, Integer> {
     @Query(value = "SELECT * FROM campeones ORDER BY Nombre_Campeon", nativeQuery = true)
     List<Campeon> findAllForAdmin();
     
-    // Para admin: obtener todos los campeones con paginación
+    // Método NATIVO que ignora completamente @Where - ESTE ES EL CORRECTO PARA ADMIN
     @Query(value = "SELECT * FROM campeones ORDER BY Nombre_Campeon", 
            countQuery = "SELECT count(*) FROM campeones",
            nativeQuery = true)
+    Page<Campeon> findAllForAdminPaginatedNative(Pageable pageable);
+    
+    // Método JPQL que SÍ será afectado por @Where (solo para referencia)
+    @Query("SELECT c FROM Campeon c WHERE c.estado IN (0, 1) ORDER BY c.nombreCampeon")
     Page<Campeon> findAllForAdminPaginated(Pageable pageable);
     
     // Activar campeón usando consulta nativa para evitar el filtro @Where
