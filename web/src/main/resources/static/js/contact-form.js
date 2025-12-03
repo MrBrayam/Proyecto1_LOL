@@ -59,7 +59,7 @@ function initContactForm() {
 		}
 		
 		// Mostrar estado de envío
-		statusElement.innerHTML = 'Enviando mensaje a Brayam...';
+		statusElement.innerHTML = 'Enviando mensaje al soporte...';
 		statusElement.style.color = '#f0b90b';
 		statusElement.style.fontWeight = 'bold';
 		
@@ -116,7 +116,7 @@ function initContactForm() {
 				console.log('Email enviado exitosamente a Brayam:', response);
 				console.log('Estado de la respuesta:', response.status);
 				console.log('Texto de la respuesta:', response.text);
-				statusElement.innerHTML = '¡Mensaje enviado exitosamente!<br>Brayam te responderá pronto.';
+				statusElement.innerHTML = '¡Mensaje enviado exitosamente!<br>El Soporte te responderá pronto.';
 				statusElement.style.color = '#00d084';
 				form.reset();
 				
