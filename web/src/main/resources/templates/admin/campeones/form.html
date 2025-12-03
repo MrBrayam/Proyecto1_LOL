@@ -4,15 +4,15 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title th:text="${campeon.idCampeon != null ? 'Editar Campeón' : 'Nuevo Campeón'}">Formulario Campeón</title>
+    <link rel="icon" type="image/svg+xml" th:href="@{/favicon.svg}">
+    <link rel="shortcut icon" type="image/svg+xml" th:href="@{/favicon.svg}">
     <link rel="stylesheet" type="text/css" th:href="@{/css/normalize.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/css/base.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/css/admin.css}">
 </head>
 <body>
-    <div th:replace="~{fragments/header :: header}"></div>
-
     <main>
-        <div class="form-container">
+        <div class="form-container admin-form-container">
             <h1 th:text="${campeon.idCampeon != null ? 'Editar Campeón' : 'Nuevo Campeón'}">Formulario Campeón</h1>
             
             <form th:action="${campeon.idCampeon != null ? '/admin/campeones/update' : '/admin/campeones/create'}" method="post" enctype="multipart/form-data">
@@ -67,8 +67,6 @@
             </form>
         </div>
     </main>
-
-    <div th:replace="~{fragments/footer :: footer}"></div>
 
     <script>
         function previewImage(input) {

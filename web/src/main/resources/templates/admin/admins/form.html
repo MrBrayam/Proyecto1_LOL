@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="${admin.idAdmin != null ? 'Editar Administrador' : 'Nuevo Administrador'}">Formulario Administrador</title>
+    <link rel="icon" type="image/svg+xml" th:href="@{/favicon.svg}">
+    <link rel="shortcut icon" type="image/svg+xml" th:href="@{/favicon.svg}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/normalize.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/base.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin.css}">
+</head>
+<body>
+    <main>
+        <div class="form-container admin-form-container">
+            <h1 th:text="${admin.idAdmin != null ? 'Editar Administrador' : 'Nuevo Administrador'}">Formulario Administrador</h1>
+            
+            <!-- Mensajes de éxito o error -->
+            <div th:if="${mensaje}" class="alert alert-success">
+                <span th:text="${mensaje}">Mensaje de éxito</span>
+            </div>
+            
+            <div th:if="${error}" class="alert alert-error">
+                <span th:text="${error}">Mensaje de error</span>
+            </div>
+            
+            <form th:action="${admin.idAdmin != null ? '/admin/admins/update' : '/admin/admins/create'}" method="post">
+                
+                <div class="form-group" th:if="${admin.idAdmin != null}">
+                    <input type="hidden" name="idAdmin" th:value="${admin.idAdmin}">
+                    <label>ID Administrador:</label>
+                    <input type="text" th:value="${admin.idAdmin}" disabled class="form-control form-control-disabled">
+                </div>
+
+                <div class="form-group" th:if="${admin.idAdmin == null}">
+                    <label>ID Administrador:</label>
+                    <input type="text" value="Se generará automáticamente" disabled class="form-control form-control-disabled form-control-italic">
+                    <small>El ID se genera automáticamente con número secuencial</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="nombre">Nombre de Usuario: *</label>
+                    <input type="text" id="nombre" name="nombre" 
+                           th:value="${admin.nombre}" 
+                           placeholder="Ej: admin01" maxlength="25" required
+                           class="form-control">
+                    <small>Máximo 25 caracteres. Este será el usuario para el login.</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="contrasena">Contraseña: *</label>
+                    <input type="password" id="contrasena" name="contrasena" 
+                           th:value="${admin.contrasena}" 
+                           placeholder="Ingrese la contraseña" maxlength="25" required
+                           class="form-control">
+                    <small>Máximo 25 caracteres. <span th:if="${admin.idAdmin != null}">Dejar vacío para mantener la contraseña actual.</span></small>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmarContrasena">Confirmar Contraseña: *</label>
+                    <input type="password" id="confirmarContrasena" name="confirmarContrasena" 
+                           placeholder="Confirme la contraseña" maxlength="25" required
+                           class="form-control">
+                    <small>Debe coincidir con la contraseña ingresada arriba.</small>
+                </div>
+
+                <div class="form-group" th:if="${admin.idAdmin != null}">
+                    <label for="estado">Estado:</label>
+                    <select id="estado" name="estado" class="form-control">
+                        <option value="1" th:selected="${admin.estado == 1}">Activo</option>
+                        <option value="0" th:selected="${admin.estado == 0}">Inactivo</option>
+                    </select>
+                    <small>Los administradores inactivos no pueden acceder al sistema.</small>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary" id="submitBtn"
+                            th:text="${admin.idAdmin != null ? 'Actualizar' : 'Crear'} + ' Administrador'">Guardar</button>
+                    <a th:href="@{/admin/admins}" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.querySelector('form');
+            const password = document.getElementById('contrasena');
+            const confirmPassword = document.getElementById('confirmarContrasena');
+            const submitBtn = document.getElementById('submitBtn');
+            const isEditing = /* [[${admin.idAdmin != null}]] */ false;
+            
+            // Validación de contraseñas
+            function validarContrasenas() {
+                const passwordValue = password.value;
+                const confirmPasswordValue = confirmPassword.value;
+                
+                // Si estamos editando y la contraseña está vacía, no validar
+                if (isEditing && passwordValue === '') {
+                    confirmPassword.setCustomValidity('');
+                    return true;
+                }
+                
+                if (passwordValue !== confirmPasswordValue) {
+                    confirmPassword.setCustomValidity('Las contraseñas no coinciden');
+                    return false;
+                } else {
+                    confirmPassword.setCustomValidity('');
+                    return true;
+                }
+            }
+            
+            // Validar en tiempo real
+            password.addEventListener('input', validarContrasenas);
+            confirmPassword.addEventListener('input', validarContrasenas);
+            
+            // Validar antes de enviar
+            form.addEventListener('submit', function(e) {
+                if (!validarContrasenas()) {
+                    e.preventDefault();
+                    alert('Las contraseñas no coinciden. Por favor, verifique.');
+                    return false;
+                }
+                
+                // Si estamos editando, permitir contraseña vacía (mantener actual)
+                if (isEditing && password.value === '') {
+                    const confirmation = confirm('¿Mantener la contraseña actual?');
+                    if (!confirmation) {
+                        e.preventDefault();
+                        password.focus();
+                        return false;
+                    }
+                }
+                
+                return true;
+            });
+            
+            // Si estamos editando, hacer opcionales las contraseñas
+            if (isEditing) {
+                password.removeAttribute('required');
+                confirmPassword.removeAttribute('required');
+            }
+        });
+    </script>
+
+    <style>
+        .alert {
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 4px;
+            border: 1px solid transparent;
+        }
+        
+        .alert-success {
+            background: #e8f5e8;
+            color: #2e7d32;
+            border-color: #c3e6cb;
+        }
+        
+        .alert-error {
+            background: #fee;
+            color: #d32f2f;
+            border-color: #f5c6cb;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 5px rgba(102, 126, 234, 0.3);
+        }
+        
+        .form-control:invalid {
+            border-color: #dc3545;
+        }
+        
+        small {
+            color: #666;
+            font-size: 0.85rem;
+            display: block;
+            margin-top: 0.25rem;
+        }
+    </style>
+</body>
+</html>

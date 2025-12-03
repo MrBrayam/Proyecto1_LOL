@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Acceso Administrativo - League of Legends</title>
+    <link rel="icon" type="image/svg+xml" th:href="@{/favicon.svg}">
+    <link rel="shortcut icon" type="image/svg+xml" th:href="@{/favicon.svg}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/normalize.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/base.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin.css}">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-logo">
+                <h1>🛡️ Panel de Administración</h1>
+                <p>League of Legends</p>
+            </div>
+            
+            <!-- Mensajes de error o éxito -->
+            <div th:if="${error}" class="alert alert-error">
+                <span th:text="${error}">Error de login</span>
+            </div>
+            
+            <div th:if="${mensaje}" class="alert alert-success">
+                <span th:text="${mensaje}">Mensaje</span>
+            </div>
+            
+            <form class="login-form" th:action="@{/admin/login}" method="post">
+                <div class="form-group">
+                    <label for="nombre">Usuario:</label>
+                    <input type="text" id="nombre" name="nombre" required autocomplete="username" placeholder="Ingrese su usuario">
+                </div>
+                
+                <div class="form-group">
+                    <label for="contrasena">Contraseña:</label>
+                    <input type="password" id="contrasena" name="contrasena" required autocomplete="current-password" placeholder="Ingrese su contraseña">
+                </div>
+                
+                <button type="submit" class="login-btn">Iniciar Sesión</button>
+            </form>
+            
+            <div class="back-to-site">
+                <a th:href="@{/}">← Volver al sitio web</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

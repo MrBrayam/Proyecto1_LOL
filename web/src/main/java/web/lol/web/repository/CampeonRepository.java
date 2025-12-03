@@ -1,5 +1,7 @@
 package web.lol.web.repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -26,6 +28,12 @@ public interface CampeonRepository extends JpaRepository<Campeon, Integer> {
     // Para admin: obtener todos los campeones sin filtro de estado
     @Query(value = "SELECT * FROM campeones ORDER BY Nombre_Campeon", nativeQuery = true)
     List<Campeon> findAllForAdmin();
+    
+    // Para admin: obtener todos los campeones con paginación
+    @Query(value = "SELECT * FROM campeones ORDER BY Nombre_Campeon", 
+           countQuery = "SELECT count(*) FROM campeones",
+           nativeQuery = true)
+    Page<Campeon> findAllForAdminPaginated(Pageable pageable);
     
     // Activar campeón usando consulta nativa para evitar el filtro @Where
     @Modifying

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Administrar Administradores - League of Legends</title>
+    <link rel="icon" type="image/svg+xml" th:href="@{/favicon.svg}">
+    <link rel="shortcut icon" type="image/svg+xml" th:href="@{/favicon.svg}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/normalize.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/base.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin.css}">
+</head>
+<body class="admin-body">
+    <main>
+        <div class="admin-container">
+            <h1>👥 Administrar Administradores</h1>
+            
+            <div class="admin-nav">
+                <a th:href="@{/admin/admins/form}" class="btn btn-primary">+ Agregar Nuevo Administrador</a>
+                <a th:href="@{/admin/dashboard}" class="btn btn-secondary">← Volver al Dashboard</a>
+                <a th:href="@{/admin/logout}" class="btn btn-danger">🚪 Cerrar Sesión</a>
+            </div>
+
+            <!-- Mensajes de éxito o error -->
+            <div th:if="${mensaje}" class="alert alert-success">
+                <span th:text="${mensaje}">Mensaje de éxito</span>
+            </div>
+            
+            <div th:if="${error}" class="alert alert-error">
+                <span th:text="${error}">Mensaje de error</span>
+            </div>
+
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre de Usuario</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="admin : ${admins}" th:class="${admin.estado == 0} ? 'admin-inactivo' : ''">
+                        <td th:text="${admin.idAdmin}">ID</td>
+                        <td>
+                            <span th:text="${admin.nombre}">Nombre</span>
+                            <span th:if="${adminLogueado.idAdmin == admin.idAdmin}" 
+                                  class="current-user-badge">(Tú)</span>
+                        </td>
+                        <td>
+                            <span th:if="${admin.estado == 1}" class="estado-activo">Activo</span>
+                            <span th:if="${admin.estado == 0}" class="estado-inactivo">Inactivo</span>
+                        </td>
+                        <td class="acciones-cell">
+                            <!-- Editar siempre disponible -->
+                            <a th:href="@{'/admin/admins/editar/' + ${admin.idAdmin}}" class="btn btn-warning btn-sm">✏️ Editar</a>
+                            
+                            <!-- Activar solo si está inactivo -->
+                            <a th:if="${admin.estado == 0}"
+                               th:href="@{'/admin/admins/activar/' + ${admin.idAdmin}}" 
+                               class="btn btn-success btn-sm"
+                               onclick="return confirm('¿Activar este administrador?')">✅ Activar</a>
+                            
+                            <!-- Desactivar solo si NO es el usuario actual y está activo -->
+                            <a th:if="${admin.estado == 1 and adminLogueado.idAdmin != admin.idAdmin}"
+                               th:href="@{'/admin/admins/desactivar/' + ${admin.idAdmin}}" 
+                               class="btn btn-danger btn-sm"
+                               onclick="return confirm('¿Desactivar este administrador? No podrá acceder al sistema.')">❌ Desactivar</a>
+                            
+                            <!-- Mensaje para el usuario actual -->
+                            <span th:if="${adminLogueado.idAdmin == admin.idAdmin}" 
+                                  class="current-user-note">Tu cuenta</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div th:if="${#lists.isEmpty(admins)}" class="no-data-message">
+                <p>No hay administradores registrados</p>
+                <a th:href="@{/admin/admins/form}" class="btn btn-primary">Agregar el primer administrador</a>
+            </div>
+        </div>
+</body>
+</html>

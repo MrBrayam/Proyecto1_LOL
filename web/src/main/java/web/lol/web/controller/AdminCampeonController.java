@@ -1,12 +1,18 @@
 package web.lol.web.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import web.lol.web.model.Admin;
 import web.lol.web.model.Campeon;
 import web.lol.web.repository.CampeonRepository;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,15 +33,46 @@ public class AdminCampeonController {
     // Directorio donde se guardarán las imágenes
     private static final String UPLOAD_DIR = "src/main/resources/static/img/uploads/";
 
+    // Método para verificar sesión
+    private boolean verificarSesion(HttpSession session) {
+        return session.getAttribute("adminLogueado") != null;
+    }
+
     @GetMapping
-    public String listarCampeones(Model model) {
-        List<Campeon> campeones = campeonRepository.findAllForAdmin();
-        model.addAttribute("campeones", campeones);
-        return "admin/campeones/index";
+    public String listarCampeones(Model model, HttpSession session,
+                                 @RequestParam(value = "page", defaultValue = "0") int page,
+                                 @RequestParam(value = "size", defaultValue = "10") int size) {
+        if (!verificarSesion(session)) {
+            return "redirect:/admin/login";
+        }
+        
+        try {
+            // Crear objeto Pageable para paginación
+            Pageable pageable = PageRequest.of(page, size, Sort.by("nombreCampeon"));
+            Page<Campeon> campeonesPage = campeonRepository.findAllForAdminPaginated(pageable);
+            
+            model.addAttribute("campeonesPage", campeonesPage);
+            model.addAttribute("campeones", campeonesPage.getContent());
+            model.addAttribute("currentPage", page);
+            model.addAttribute("totalPages", campeonesPage.getTotalPages());
+            model.addAttribute("totalElements", campeonesPage.getTotalElements());
+            model.addAttribute("size", size);
+            
+            return "admin/campeones/index";
+        } catch (Exception e) {
+            System.err.println("Error al listar campeones: " + e.getMessage());
+            e.printStackTrace();
+            model.addAttribute("error", "Error al cargar los campeones");
+            return "admin/dashboard";
+        }
     }
 
     @GetMapping("/form")
-    public String formularioNuevo(Model model) {
+    public String formularioNuevo(Model model, HttpSession session) {
+        if (!verificarSesion(session)) {
+            return "redirect:/admin/login";
+        }
+        
         model.addAttribute("campeon", new Campeon());
         return "admin/campeones/form";
     }
@@ -44,8 +81,13 @@ public class AdminCampeonController {
     public String crear(
             @RequestParam("nombreCampeon") String nombreCampeon,
             @RequestParam("descripcionCampeon") String descripcionCampeon,
-            @RequestParam("rutaimg") MultipartFile imagenFile
+            @RequestParam("rutaimg") MultipartFile imagenFile,
+            HttpSession session
     ) {
+        if (!verificarSesion(session)) {
+            return "redirect:/admin/login";
+        }
+        
         System.out.println("=== CREANDO NUEVO CAMPEÓN ===");
         System.out.println("Nombre: " + nombreCampeon);
         System.out.println("Descripción: " + descripcionCampeon);
@@ -75,7 +117,11 @@ public class AdminCampeonController {
     }
 
     @GetMapping("/editar/{id}")
-    public String formularioEditar(@PathVariable Integer id, Model model) {
+    public String formularioEditar(@PathVariable Integer id, Model model, HttpSession session) {
+        if (!verificarSesion(session)) {
+            return "redirect:/admin/login";
+        }
+        
         Optional<Campeon> campeonOpt = campeonRepository.findById(id);
         if (campeonOpt.isPresent()) {
             model.addAttribute("campeon", campeonOpt.get());
@@ -89,8 +135,13 @@ public class AdminCampeonController {
             @RequestParam("idCampeon") Integer idCampeon,
             @RequestParam("nombreCampeon") String nombreCampeon,
             @RequestParam("descripcionCampeon") String descripcionCampeon,
-            @RequestParam("rutaimg") MultipartFile imagenFile
+            @RequestParam("rutaimg") MultipartFile imagenFile,
+            HttpSession session
     ) {
+        if (!verificarSesion(session)) {
+            return "redirect:/admin/login";
+        }
+        
         try {
             Optional<Campeon> opt = campeonRepository.findById(idCampeon);
             if (opt.isPresent()) {
@@ -116,7 +167,11 @@ public class AdminCampeonController {
     }
 
     @GetMapping("/desactivar/{id}")
-    public String desactivar(@PathVariable Integer id) {
+    public String desactivar(@PathVariable Integer id, HttpSession session) {
+        if (!verificarSesion(session)) {
+            return "redirect:/admin/login";
+        }
+        
         try {
             System.out.println("=== DESACTIVANDO CAMPEÓN ===");
             System.out.println("ID: " + id);
@@ -132,7 +187,11 @@ public class AdminCampeonController {
     }
 
     @GetMapping("/activar/{id}")
-    public String activar(@PathVariable Integer id) {
+    public String activar(@PathVariable Integer id, HttpSession session) {
+        if (!verificarSesion(session)) {
+            return "redirect:/admin/login";
+        }
+        
         try {
             System.out.println("=== INTENTANDO ACTIVAR CAMPEÓN ===");
             System.out.println("ID: " + id);

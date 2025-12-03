@@ -228,3 +228,29 @@ body {
     color: #666;
     line-height: 1.6;
 }
+
+/* Footer styles */
+.site-footer {
+    background: var(--dark-gray);
+    color: var(--white);
+    text-align: center;
+    padding: 2rem 1rem;
+    margin-top: auto;
+}
+
+.admin-link {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+}
+
+.admin-link a {
+    color: #999;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    font-size: 0.8rem;
+}
+
+.admin-link a:hover {
+    color: var(--gold);
+    text-decoration: underline;
+}

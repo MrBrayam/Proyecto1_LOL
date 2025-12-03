@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dashboard Administrativo - League of Legends</title>
+    <link rel="icon" type="image/svg+xml" th:href="@{/favicon.svg}">
+    <link rel="shortcut icon" type="image/svg+xml" th:href="@{/favicon.svg}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/normalize.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/base.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin.css}">
+</head>
+<body class="admin-body">
+    <div class="dashboard-header">
+        <div class="user-info">
+            👋 Bienvenido, <span th:text="${admin.nombre}">Administrador</span>
+        </div>
+        <h1>Panel de Administración</h1>
+        <p>Gestiona el contenido de League of Legends</p>
+    </div>
+    
+    <div class="dashboard-content">
+        <div class="admin-options">
+            <!-- Gestión de Campeones -->
+            <a href="/admin/campeones" class="admin-option-card">
+                <span class="option-icon">⚔️</span>
+                <h3 class="option-title">Gestionar Campeones</h3>
+                <p class="option-description">
+                    Administra la lista de campeones: agregar nuevos, editar información, 
+                    subir imágenes y controlar el estado de visualización.
+                </p>
+                <span class="option-btn">Administrar Campeones</span>
+            </a>
+            
+            <!-- Gestión de Administradores -->
+            <a href="/admin/admins" class="admin-option-card">
+                <span class="option-icon">👥</span>
+                <h3 class="option-title">Gestionar Administradores</h3>
+                <p class="option-description">
+                    Administra las cuentas de administrador: crear nuevos usuarios, 
+                    modificar contraseñas y controlar accesos.
+                </p>
+                <span class="option-btn">Administrar Usuarios</span>
+            </a>
+        </div>
+        
+        <!-- Acciones Rápidas -->
+        <div class="quick-actions">
+            <h3>Acciones Rápidas</h3>
+            <div class="quick-actions-grid">
+                <a href="/admin/campeones/form" class="quick-action-btn">+ Nuevo Campeón</a>
+                <a href="/admin/admins/form" class="quick-action-btn">+ Nuevo Admin</a>
+                <a href="/" class="quick-action-btn">Ver Sitio Web</a>
+                <a href="/campeones" class="quick-action-btn">Ver Campeones</a>
+            </div>
+        </div>
+        
+        <!-- Logout -->
+        <div class="logout-section">
+            <a href="/admin/logout" class="logout-btn" 
+               onclick="return confirm('¿Estás seguro de que quieres cerrar sesión?')">
+                🚪 Cerrar Sesión
+            </a>
+        </div>
+    </div>
+</body>
+</html>

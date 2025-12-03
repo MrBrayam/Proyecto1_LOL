@@ -2,6 +2,8 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
+    <link rel="icon" type="image/svg+xml" th:href="@{/favicon.svg}">
+    <link rel="shortcut icon" type="image/svg+xml" th:href="@{/favicon.svg}">
 </head>
 <body>
     <!-- Header Fragment -->
@@ -33,6 +35,9 @@
     <footer th:fragment="footer" class="site-footer">
         <div class="contenedor">
             <p>© 2025 WebLOL. Todos los derechos reservados.</p>
+            <p class="admin-link">
+                <a th:href="@{/admin/login}" title="Panel de Administración">🔐 Admin</a>
+            </p>
         </div>
     </footer>
 </body>
