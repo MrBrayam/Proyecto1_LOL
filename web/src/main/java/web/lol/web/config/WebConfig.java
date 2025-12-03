@@ -13,9 +13,8 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        // Registrar el interceptor para todas las rutas /admin/*
         registry.addInterceptor(adminAuthInterceptor)
                 .addPathPatterns("/admin/**")
-                .excludePathPatterns("/admin/login", "/admin/logout"); // Excluir login y logout de la validación
+                .excludePathPatterns("/admin/login", "/admin/logout"); 
     }
 }

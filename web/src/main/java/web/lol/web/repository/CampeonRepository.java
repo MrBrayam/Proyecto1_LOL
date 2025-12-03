@@ -14,7 +14,6 @@ import java.util.List;
 @Repository
 public interface CampeonRepository extends JpaRepository<Campeon, Integer> {
     
-    // Con @Where, automáticamente filtra por estado=1
     List<Campeon> findAllByOrderByNombreCampeon();
     
     @Query("SELECT c FROM Campeon c WHERE UPPER(SUBSTRING(c.nombreCampeon, 1, 1)) = :letra ORDER BY c.nombreCampeon")
@@ -25,27 +24,22 @@ public interface CampeonRepository extends JpaRepository<Campeon, Integer> {
     
     List<Campeon> findByNombreCampeonContainingIgnoreCase(String nombre);
     
-    // Para admin: obtener todos los campeones sin filtro de estado
     @Query(value = "SELECT * FROM campeones ORDER BY Nombre_Campeon", nativeQuery = true)
     List<Campeon> findAllForAdmin();
     
-    // Método NATIVO que ignora completamente @Where - ESTE ES EL CORRECTO PARA ADMIN
     @Query(value = "SELECT * FROM campeones ORDER BY Nombre_Campeon", 
            countQuery = "SELECT count(*) FROM campeones",
            nativeQuery = true)
     Page<Campeon> findAllForAdminPaginatedNative(Pageable pageable);
     
-    // Método JPQL que SÍ será afectado por @Where (solo para referencia)
     @Query("SELECT c FROM Campeon c WHERE c.estado IN (0, 1) ORDER BY c.nombreCampeon")
     Page<Campeon> findAllForAdminPaginated(Pageable pageable);
     
-    // Activar campeón usando consulta nativa para evitar el filtro @Where
     @Modifying
     @Transactional
     @Query(value = "UPDATE campeones SET Estado = 1 WHERE ID_Campeon = :id", nativeQuery = true)
     int activarCampeon(@Param("id") Integer id);
     
-    // También agregar método para desactivar por consistencia
     @Modifying
     @Transactional
     @Query(value = "UPDATE campeones SET Estado = 0 WHERE ID_Campeon = :id", nativeQuery = true)

@@ -26,14 +26,12 @@ public class Campeon {
     @Column(name = "rutaimg", length = 200)
     private String rutaimg;
 
-    // Campos adicionales para la aplicación web (no mapeados a la BD)
     @Transient
     private String imagenPath;
 
     @Transient
     private String letra;
 
-    // Constructores
     public Campeon() {}
 
     public Campeon(String nombreCampeon, String descripcionCampeon) {
@@ -51,7 +49,6 @@ public class Campeon {
         this.letra = letra;
     }
 
-    // Getters y setters
     public Integer getIdCampeon() {
         return idCampeon;
     }

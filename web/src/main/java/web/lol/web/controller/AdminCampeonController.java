@@ -30,10 +30,8 @@ public class AdminCampeonController {
     @Autowired
     private CampeonRepository campeonRepository;
 
-    // Directorio donde se guardarán las imágenes
     private static final String UPLOAD_DIR = "src/main/resources/static/img/uploads/";
 
-    // Método para verificar sesión
     private boolean verificarSesion(HttpSession session) {
         return session.getAttribute("adminLogueado") != null;
     }
@@ -47,7 +45,6 @@ public class AdminCampeonController {
         }
         
         try {
-            // Validar parámetros
             if (page < 0) page = 0;
             if (size <= 0 || size > 100) size = 10;
             
@@ -55,10 +52,8 @@ public class AdminCampeonController {
             System.out.println("Page solicitada: " + page);
             System.out.println("Size solicitado: " + size);
             
-            // Crear objeto Pageable para paginación
             Pageable pageable = PageRequest.of(page, size);
             
-            // Usar consulta nativa que ignora @Where
             Page<Campeon> campeonesPage;
             
             try {
@@ -76,7 +71,6 @@ public class AdminCampeonController {
                 System.err.println("ERROR en paginación nativa: " + e.getMessage());
                 e.printStackTrace();
                 
-                // Fallback: Lista completa sin paginación
                 List<Campeon> campeones = campeonRepository.findAllForAdmin();
                 model.addAttribute("campeones", campeones);
                 model.addAttribute("totalElements", campeones.size());
@@ -91,7 +85,6 @@ public class AdminCampeonController {
                 return "admin/campeones/index";
             }
             
-            // Agregar todos los atributos al modelo
             model.addAttribute("campeonesPage", campeonesPage);
             model.addAttribute("campeones", campeonesPage.getContent());
             model.addAttribute("currentPage", page);
@@ -110,7 +103,6 @@ public class AdminCampeonController {
             System.err.println("Error completo al listar campeones: " + e.getMessage());
             e.printStackTrace();
             
-            // En caso de error total, usar lista simple sin paginación
             try {
                 List<Campeon> campeones = campeonRepository.findAllForAdmin();
                 model.addAttribute("campeones", campeones);
@@ -163,7 +155,6 @@ public class AdminCampeonController {
             campeon.setDescripcionCampeon(descripcionCampeon);
             campeon.setEstado(1);
 
-            // Procesar imagen si se subió
             String rutaImagen = guardarImagen(imagenFile, nombreCampeon);
             if (rutaImagen != null) {
                 campeon.setRutaimg(rutaImagen);
@@ -214,7 +205,6 @@ public class AdminCampeonController {
                 campeon.setNombreCampeon(nombreCampeon);
                 campeon.setDescripcionCampeon(descripcionCampeon);
                 
-                // Procesar imagen si se subió una nueva
                 String rutaImagen = guardarImagen(imagenFile, nombreCampeon);
                 if (rutaImagen != null) {
                     campeon.setRutaimg(rutaImagen);
@@ -271,33 +261,25 @@ public class AdminCampeonController {
         return "redirect:/admin/campeones?mensaje=activacion-intentada";
     }
 
-    /**
-     * Método para guardar imágenes subidas
-     */
     private String guardarImagen(MultipartFile file, String nombreCampeon) {
         if (file == null || file.isEmpty()) {
             return null;
         }
 
         try {
-            // Crear directorio si no existe
             Path uploadPath = Paths.get(UPLOAD_DIR);
             if (!Files.exists(uploadPath)) {
                 Files.createDirectories(uploadPath);
             }
 
-            // Obtener extensión del archivo
             String originalFilename = file.getOriginalFilename();
             String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
             
-            // Generar nombre único del archivo
             String fileName = nombreCampeon.replaceAll("[^a-zA-Z0-9]", "_") + "_" + System.currentTimeMillis() + extension;
             
-            // Guardar archivo
             Path filePath = uploadPath.resolve(fileName);
             Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
             
-            // Retornar ruta relativa para la web
             String rutaWeb = "/img/uploads/" + fileName;
             System.out.println("Imagen guardada: " + rutaWeb);
             

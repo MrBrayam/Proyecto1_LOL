@@ -21,7 +21,6 @@ public class Admin {
     @Column(name = "Estado")
     private Integer estado = 1;
 
-    // Constructores
     public Admin() {}
 
     public Admin(String nombre, String contrasena) {
@@ -30,7 +29,6 @@ public class Admin {
         this.estado = 1;
     }
 
-    // Getters y setters
     public Integer getIdAdmin() {
         return idAdmin;
     }

@@ -18,12 +18,10 @@ public class AdminManagementController {
     @Autowired
     private AdminService adminService;
     
-    // Verificar sesión antes de cada método
     private boolean verificarSesion(HttpSession session) {
         return session.getAttribute("adminLogueado") != null;
     }
     
-    // Listar todos los administradores
     @GetMapping
     public String listarAdmins(Model model, HttpSession session) {
         if (!verificarSesion(session)) {
@@ -46,7 +44,6 @@ public class AdminManagementController {
         }
     }
     
-    // Mostrar formulario para nuevo administrador
     @GetMapping("/form")
     public String mostrarFormularioNuevo(Model model, HttpSession session) {
         if (!verificarSesion(session)) {
@@ -58,7 +55,6 @@ public class AdminManagementController {
         return "admin/admins/form";
     }
     
-    // Mostrar formulario para editar administrador
     @GetMapping("/editar/{id}")
     public String mostrarFormularioEditar(@PathVariable Integer id, Model model, HttpSession session) {
         if (!verificarSesion(session)) {
@@ -82,7 +78,6 @@ public class AdminManagementController {
         }
     }
     
-    // Crear nuevo administrador
     @PostMapping("/create")
     public String crearAdmin(@ModelAttribute Admin admin, 
                             @RequestParam(value = "confirmarContrasena", required = false) String confirmarContrasena,
@@ -93,7 +88,6 @@ public class AdminManagementController {
         }
         
         try {
-            // Validar confirmación de contraseña
             if (!admin.getContrasena().equals(confirmarContrasena)) {
                 redirectAttributes.addFlashAttribute("error", "Las contraseñas no coinciden");
                 return "redirect:/admin/admins/form";
@@ -112,7 +106,6 @@ public class AdminManagementController {
         }
     }
     
-    // Actualizar administrador
     @PostMapping("/update")
     public String actualizarAdmin(@ModelAttribute Admin admin, 
                                  @RequestParam(value = "confirmarContrasena", required = false) String confirmarContrasena,
@@ -123,15 +116,12 @@ public class AdminManagementController {
         }
         
         try {
-            // Si la contraseña está vacía, mantener la actual
             if (admin.getContrasena() == null || admin.getContrasena().trim().isEmpty()) {
-                // Obtener la contraseña actual de la base de datos
                 Optional<Admin> adminActualOpt = adminService.obtenerAdminPorId(admin.getIdAdmin());
                 if (adminActualOpt.isPresent()) {
                     admin.setContrasena(adminActualOpt.get().getContrasena());
                 }
             } else {
-                // Validar confirmación de contraseña
                 if (!admin.getContrasena().equals(confirmarContrasena)) {
                     redirectAttributes.addFlashAttribute("error", "Las contraseñas no coinciden");
                     return "redirect:/admin/admins/editar/" + admin.getIdAdmin();
@@ -151,7 +141,6 @@ public class AdminManagementController {
         }
     }
     
-    // Activar administrador
     @GetMapping("/activar/{id}")
     public String activarAdmin(@PathVariable Integer id, HttpSession session, RedirectAttributes redirectAttributes) {
         if (!verificarSesion(session)) {
@@ -173,7 +162,6 @@ public class AdminManagementController {
         return "redirect:/admin/admins";
     }
     
-    // Desactivar administrador
     @GetMapping("/desactivar/{id}")
     public String desactivarAdmin(@PathVariable Integer id, HttpSession session, RedirectAttributes redirectAttributes) {
         if (!verificarSesion(session)) {
@@ -181,14 +169,12 @@ public class AdminManagementController {
         }
         
         try {
-            // Verificar que no sea el último admin activo
             Admin adminActual = (Admin) session.getAttribute("adminLogueado");
             if (adminActual.getIdAdmin().equals(id)) {
                 redirectAttributes.addFlashAttribute("error", "No puedes desactivar tu propia cuenta");
                 return "redirect:/admin/admins";
             }
             
-            // Verificar que haya al menos otro admin activo
             List<Admin> adminsActivos = adminService.obtenerTodosAdmins();
             if (adminsActivos.size() <= 1) {
                 redirectAttributes.addFlashAttribute("error", "No se puede desactivar el último administrador activo");

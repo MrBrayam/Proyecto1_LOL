@@ -17,19 +17,16 @@ public class AdminLoginController {
     @Autowired
     private AdminService adminService;
     
-    // Mostrar página de login
     @GetMapping("/login")
     public String mostrarLogin(Model model, HttpSession session, 
                               @RequestParam(value = "error", required = false) String error,
                               @RequestParam(value = "logout", required = false) String logout) {
         
-        // Si ya está logueado, redirigir al dashboard
         Admin adminLogueado = (Admin) session.getAttribute("adminLogueado");
         if (adminLogueado != null) {
             return "redirect:/admin/dashboard";
         }
         
-        // Agregar mensajes de error o logout
         if ("true".equals(error)) {
             model.addAttribute("error", "Credenciales incorrectas. Intente nuevamente.");
         } else if ("account_disabled".equals(error)) {
@@ -43,7 +40,6 @@ public class AdminLoginController {
         return "admin/login";
     }
     
-    // Procesar login
     @PostMapping("/login")
     public String procesarLogin(@RequestParam String nombre, 
                                @RequestParam String contrasena,
@@ -56,12 +52,11 @@ public class AdminLoginController {
                 // Login exitoso
                 Admin admin = adminOpt.get();
                 session.setAttribute("adminLogueado", admin);
-                session.setMaxInactiveInterval(30 * 60); // 30 minutos
+                session.setMaxInactiveInterval(30 * 60); 
                 
                 System.out.println("Login exitoso para: " + admin.getNombre());
                 return "redirect:/admin/dashboard";
             } else {
-                // Credenciales incorrectas
                 System.out.println("Login fallido para: " + nombre);
                 return "redirect:/admin/login?error=true";
             }
@@ -72,10 +67,8 @@ public class AdminLoginController {
         }
     }
     
-    // Dashboard principal del admin
     @GetMapping("/dashboard")
     public String mostrarDashboard(Model model, HttpSession session) {
-        // Verificar si está logueado
         Admin adminLogueado = (Admin) session.getAttribute("adminLogueado");
         if (adminLogueado == null) {
             return "redirect:/admin/login";
@@ -88,7 +81,6 @@ public class AdminLoginController {
         return "admin/dashboard";
     }
     
-    // Redirigir /admin a /admin/dashboard (con verificación de sesión)
     @GetMapping("")
     public String adminRoot(HttpSession session) {
         Admin adminLogueado = (Admin) session.getAttribute("adminLogueado");
@@ -98,7 +90,6 @@ public class AdminLoginController {
         return "redirect:/admin/dashboard";
     }
     
-    // Logout
     @GetMapping("/logout")
     public String logout(HttpSession session, RedirectAttributes redirectAttributes) {
         try {
@@ -118,7 +109,6 @@ public class AdminLoginController {
         }
     }
     
-    // Endpoint para verificar sesión (AJAX)
     @GetMapping("/verificar-sesion")
     @ResponseBody
     public boolean verificarSesion(HttpSession session) {
