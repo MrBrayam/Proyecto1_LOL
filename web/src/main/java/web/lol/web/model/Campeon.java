@@ -1,13 +1,11 @@
 package web.lol.web.model;
 
 import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "campeones")
 @SQLDelete(sql = "UPDATE campeones SET Estado=0 WHERE ID_Campeon=?")
-@Where(clause = "Estado=1")
 public class Campeon {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
