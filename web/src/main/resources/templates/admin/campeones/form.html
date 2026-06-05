@@ -6,99 +6,105 @@
     <title th:text="${campeon.idCampeon != null ? 'Editar Campeón' : 'Nuevo Campeón'}">Formulario Campeón</title>
     <link rel="icon" type="image/svg+xml" th:href="@{/favicon.svg}">
     <link rel="shortcut icon" type="image/svg+xml" th:href="@{/favicon.svg}">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/normalize.css?v=2.0}">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/base.css?v=2.0}">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/admin.css?v=2.0}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/normalize.css?v=3.0}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin.css?v=3.0}">
 </head>
-<body class="admin-form-container">
-    <main>
-        <div class="form-container">
-            <h1 th:text="${campeon.idCampeon != null ? 'Editar Campeón' : 'Nuevo Campeón'}">Formulario Campeón</h1>
-            
-            <!-- Mensajes de éxito o error -->
-            <div th:if="${mensaje}" class="alert alert-success">
-                <span th:text="${mensaje}">Mensaje de éxito</span>
-            </div>
-            
-            <div th:if="${error}" class="alert alert-error">
-                <span th:text="${error}">Mensaje de error</span>
-            </div>
-            
-            <form th:action="${campeon.idCampeon != null ? '/admin/campeones/update' : '/admin/campeones/create'}" method="post" enctype="multipart/form-data">
-                
-                <div class="form-group" th:if="${campeon.idCampeon != null}">
-                    <input type="hidden" name="idCampeon" th:value="${campeon.idCampeon}">
-                    <label>ID Campeón:</label>
-                    <input type="text" th:value="${campeon.idCampeon}" disabled class="form-control form-control-disabled">
+<body class="admin-body">
+    <div class="admin-layout">
+        <div th:replace="~{admin/fragments :: sidebar('campeones')}"></div>
+        <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+        <main class="admin-main">
+            <div class="form-container">
+                <h1 th:text="${campeon.idCampeon != null ? 'Editar Campeón' : 'Nuevo Campeón'}">Formulario Campeón</h1>
+
+                <div th:if="${mensaje}" class="alert alert-success">
+                    <span th:text="${mensaje}">Mensaje de éxito</span>
                 </div>
 
-                <div class="form-group" th:if="${campeon.idCampeon == null}">
-                    <label>ID Campeón:</label>
-                    <input type="text" value="Se generará automáticamente" disabled class="form-control form-control-disabled form-control-italic">
-                    <small>El ID se genera automáticamente con número secuencial</small>
+                <div th:if="${error}" class="alert alert-error">
+                    <span th:text="${error}">Mensaje de error</span>
                 </div>
 
-                <div class="form-group">
-                    <label for="nombreCampeon">Nombre del Campeón: *</label>
-                    <input type="text" id="nombreCampeon" name="nombreCampeon" 
-                           th:value="${campeon.nombreCampeon}" 
-                           placeholder="Ej: Aatrox" maxlength="50" required class="form-control">
-                </div>
+                <form th:action="${campeon.idCampeon != null ? '/admin/campeones/update' : '/admin/campeones/create'}" method="post" enctype="multipart/form-data">
 
-                <div class="form-group">
-                    <label for="descripcionCampeon">Descripción:</label>
-                    <textarea id="descripcionCampeon" name="descripcionCampeon" 
-                              placeholder="Ej: La Espada de los Mundos Sombríos" 
-                              maxlength="150" th:text="${campeon.descripcionCampeon}" class="form-control"></textarea>
-                </div>
+                    <div class="form-group" th:if="${campeon.idCampeon != null}">
+                        <input type="hidden" name="idCampeon" th:value="${campeon.idCampeon}">
+                        <label>ID Campeón:</label>
+                        <input type="text" th:value="${campeon.idCampeon}" disabled class="form-control form-control-disabled">
+                    </div>
 
-                <div class="form-group">
-                    <label for="rutaimg">Imagen del Campeón:</label>
-                    <div class="image-upload-container">
-                        <div class="file-input-wrapper">
-                            <input type="file" id="rutaimg" name="rutaimg" accept="image/*" onchange="previewImage(this)">
-                            <label for="rutaimg" class="file-input-button">Seleccionar Imagen</label>
-                        </div>
-                        <p><small>Formatos permitidos: JPG, PNG, GIF | Tamaño máximo: 2MB</small></p>
-                        <img id="imagePreview" class="image-preview" alt="Vista previa">
-                        <div id="currentImage" th:if="${campeon.rutaimg}">
-                            <p><strong>Imagen actual:</strong></p>
-                            <img th:src="${campeon.rutaimg}" alt="Imagen actual" class="current-image-preview">
+                    <div class="form-group" th:if="${campeon.idCampeon == null}">
+                        <label>ID Campeón:</label>
+                        <input type="text" value="Se generará automáticamente" disabled class="form-control form-control-disabled form-control-italic">
+                        <small>El ID se genera automáticamente con número secuencial</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="nombreCampeon">Nombre del Campeón: *</label>
+                        <input type="text" id="nombreCampeon" name="nombreCampeon"
+                               th:value="${campeon.nombreCampeon}"
+                               placeholder="Ej: Aatrox" maxlength="50" required class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="descripcionCampeon">Descripción:</label>
+                        <textarea id="descripcionCampeon" name="descripcionCampeon"
+                                  placeholder="Ej: La Espada de los Mundos Sombríos"
+                                  maxlength="150" th:text="${campeon.descripcionCampeon}" class="form-control"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="rutaimg">Imagen del Campeón:</label>
+                        <div class="image-upload-container">
+                            <div class="file-input-wrapper">
+                                <input type="file" id="rutaimg" name="rutaimg" accept="image/*" onchange="previewImage(this)">
+                                <label for="rutaimg" class="file-input-button">Seleccionar Imagen</label>
+                            </div>
+                            <p><small>Formatos permitidos: JPG, PNG, GIF | Tamaño máximo: 2MB</small></p>
+                            <img id="imagePreview" class="image-preview" alt="Vista previa">
+                            <div id="currentImage" th:if="${campeon.rutaimg}">
+                                <p><strong>Imagen actual:</strong></p>
+                                <img th:src="${campeon.rutaimg}" alt="Imagen actual" class="current-image-preview">
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="form-actions">
-                    <button type="submit" class="btn btn-primary" 
-                            th:text="${campeon.idCampeon != null ? 'Actualizar' : 'Crear'} + ' Campeón'">Guardar</button>
-                    <a th:href="@{/admin/campeones}" class="btn btn-secondary">Cancelar</a>
-                </div>
-            </form>
-        </div>
-    </main>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary"
+                                th:text="${campeon.idCampeon != null ? 'Actualizar' : 'Crear'} + ' Campeón'">Guardar</button>
+                        <a th:href="@{/admin/campeones}" class="btn btn-secondary">Cancelar</a>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
 
     <script>
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+            document.getElementById('sidebarOverlay').classList.toggle('show');
+        }
+
         function previewImage(input) {
             const preview = document.getElementById('imagePreview');
             const currentImage = document.getElementById('currentImage');
-            
+
             if (input.files && input.files[0]) {
                 const reader = new FileReader();
-                
+
                 reader.onload = function(e) {
                     preview.src = e.target.result;
                     preview.style.display = 'block';
-                    
-                    // Ocultar imagen actual si existe
+
                     if (currentImage) {
                         currentImage.style.display = 'none';
                     }
                 }
-                
+
                 reader.readAsDataURL(input.files[0]);
             } else {
                 preview.style.display = 'none';
-                // Mostrar imagen actual si existe
                 if (currentImage) {
                     currentImage.style.display = 'block';
                 }

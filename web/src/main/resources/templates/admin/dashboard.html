@@ -6,86 +6,81 @@
     <title>Dashboard Administrativo - League of Legends</title>
     <link rel="icon" type="image/svg+xml" th:href="@{/favicon.svg}">
     <link rel="shortcut icon" type="image/svg+xml" th:href="@{/favicon.svg}">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/normalize.css?v=1.0}">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/base.css?v=1.0}">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/admin.css?v=1.0}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/normalize.css?v=2.0}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin.css?v=2.0}">
 </head>
 <body class="admin-body">
-    <div class="dashboard-header">
-        <div class="user-info">
-            Bienvenido, <span th:text="${admin.nombre}">Administrador</span>
-        </div>
-        <h1>Panel de Administración</h1>
-        <p>Gestiona el contenido de League of Legends</p>
-    </div>
-    
-    <div class="dashboard-content">
-        <div class="admin-options">
-            <!-- Gestión de Campeones -->
-            <a href="/admin/campeones" class="admin-option-card">
-                <span class="option-icon">CAM</span>
-                <h3 class="option-title">Gestionar Campeones</h3>
-                <p class="option-description">
-                    Administra la lista de campeones: agregar nuevos, editar información, 
-                    subir imágenes y controlar el estado de visualización.
-                </p>
-                <span class="option-btn">Administrar Campeones</span>
-            </a>
-            
-            <!-- Gestión de Administradores -->
-            <a href="/admin/admins" class="admin-option-card">
-                <span class="option-icon">ADM</span>
-                <h3 class="option-title">Gestionar Administradores</h3>
-                <p class="option-description">
-                    Administra las cuentas de administrador: crear nuevos usuarios, 
-                    modificar contraseñas y controlar accesos.
-                </p>
-                <span class="option-btn">Administrar Usuarios</span>
-            </a>
+    <div class="admin-layout">
+        <div th:replace="~{admin/fragments :: sidebar('dashboard')}"></div>
+        <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
 
-            <!-- Gestión de Runas -->
-            <a href="/admin/runas" class="admin-option-card">
-                <span class="option-icon">RUN</span>
-                <h3 class="option-title">Gestionar Runas</h3>
-                <p class="option-description">
-                    Administra las runas: agregar nuevas, editar información, 
-                    y controlar el estado de visualización.
-                </p>
-                <span class="option-btn">Administrar Runas</span>
-            </a>
-
-            <!-- Gestión de Categorías -->
-            <a href="/admin/categorias" class="admin-option-card">
-                <span class="option-icon">CAT</span>
-                <h3 class="option-title">Gestionar Categorías de Runas</h3>
-                <p class="option-description">
-                    Administra las categorías de runas: crear nuevas, 
-                    editar colores y descripciones.
-                </p>
-                <span class="option-btn">Administrar Categorías</span>
-            </a>
-        </div>
-        
-        <!-- Acciones Rápidas -->
-        <div class="quick-actions">
-            <h3>Acciones Rápidas</h3>
-            <div class="quick-actions-grid">
-                <a href="/admin/campeones/form" class="quick-action-btn">+ Nuevo Campeón</a>
-                <a href="/admin/admins/form" class="quick-action-btn">+ Nuevo Admin</a>
-                <a href="/admin/runas/form" class="quick-action-btn">+ Nueva Runa</a>
-                <a href="/admin/categorias/form" class="quick-action-btn">+ Nueva Categoría</a>
-                <a href="/" class="quick-action-btn">Ver Sitio Web</a>
-                <a href="/campeones" class="quick-action-btn">Ver Campeones</a>
+        <main class="admin-main">
+            <div class="dashboard-header">
+                <h1>Panel de Administración</h1>
+                <p>Gestiona el contenido de League of Legends</p>
             </div>
-        </div>
-        
-        <!-- Logout -->
-        <div class="logout-section">
-            <a href="/admin/logout" class="logout-btn" 
-               onclick="return confirm('¿Estás seguro de que quieres cerrar sesión?')">
-                Cerrar Sesión
-            </a>
-        </div>
+
+            <div class="admin-options">
+                <a href="/admin/campeones" class="admin-option-card">
+                    <span class="option-icon">C</span>
+                    <h3 class="option-title">Gestionar Campeones</h3>
+                    <p class="option-description">
+                        Administra la lista de campeones: agregar nuevos, editar información,
+                        subir imágenes y controlar el estado de visualización.
+                    </p>
+                    <span class="option-btn">Administrar Campeones</span>
+                </a>
+
+                <a href="/admin/admins" class="admin-option-card">
+                    <span class="option-icon">A</span>
+                    <h3 class="option-title">Gestionar Administradores</h3>
+                    <p class="option-description">
+                        Administra las cuentas de administrador: crear nuevos usuarios,
+                        modificar contraseñas y controlar accesos.
+                    </p>
+                    <span class="option-btn">Administrar Usuarios</span>
+                </a>
+
+                <a href="/admin/runas" class="admin-option-card">
+                    <span class="option-icon">R</span>
+                    <h3 class="option-title">Gestionar Runas</h3>
+                    <p class="option-description">
+                        Administra las runas: agregar nuevas, editar información,
+                        y controlar el estado de visualización.
+                    </p>
+                    <span class="option-btn">Administrar Runas</span>
+                </a>
+
+                <a href="/admin/categorias" class="admin-option-card">
+                    <span class="option-icon">T</span>
+                    <h3 class="option-title">Gestionar Categorías de Runas</h3>
+                    <p class="option-description">
+                        Administra las categorías de runas: crear nuevas,
+                        editar colores y descripciones.
+                    </p>
+                    <span class="option-btn">Administrar Categorías</span>
+                </a>
+            </div>
+
+            <div class="quick-actions">
+                <h3>Acciones Rápidas</h3>
+                <div class="quick-actions-grid">
+                    <a href="/admin/campeones/form" class="quick-action-btn">+ Nuevo Campeón</a>
+                    <a href="/admin/admins/form" class="quick-action-btn">+ Nuevo Admin</a>
+                    <a href="/admin/runas/form" class="quick-action-btn">+ Nueva Runa</a>
+                    <a href="/admin/categorias/form" class="quick-action-btn">+ Nueva Categoría</a>
+                    <a href="/" class="quick-action-btn">Ver Sitio Web</a>
+                    <a href="/campeones" class="quick-action-btn">Ver Campeones</a>
+                </div>
+            </div>
+        </main>
     </div>
+
+    <script>
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+            document.getElementById('sidebarOverlay').classList.toggle('show');
+        }
+    </script>
 </body>
 </html>

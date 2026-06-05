@@ -6,61 +6,72 @@
     <title>Administrar Runas - League of Legends</title>
     <link rel="icon" type="image/svg+xml" th:href="@{/favicon.svg}">
     <link rel="shortcut icon" type="image/svg+xml" th:href="@{/favicon.svg}">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/normalize.css?v=4.0}">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/base.css?v=4.0}">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/admin.css?v=4.0}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/normalize.css?v=5.0}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin.css?v=5.0}">
 </head>
 <body class="admin-body">
-    <main>
-        <div class="admin-container">
-            <h1>Administrar Runas</h1>
+    <div class="admin-layout">
+        <div th:replace="~{admin/fragments :: sidebar('runas')}"></div>
+        <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
 
-            <div class="admin-nav">
-                <a th:href="@{/admin/runas/form}" class="btn btn-primary">Agregar Nueva Runa</a>
-                <a th:href="@{/admin/dashboard}" class="btn btn-secondary">Volver al Dashboard</a>
+        <main class="admin-main">
+            <div class="admin-container">
+                <div class="page-header">
+                    <h1>Administrar Runas</h1>
+                    <div class="header-actions">
+                        <a th:href="@{/admin/runas/form}" class="btn btn-primary">+ Agregar Nueva</a>
+                    </div>
+                </div>
+
+                <div th:if="${mensaje}" class="alert alert-success">
+                    <span th:text="${mensaje}">Mensaje</span>
+                </div>
+
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Descripción</th>
+                            <th>Tipo</th>
+                            <th>Categoría</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="runa : ${runas}" th:class="${runa.estado == 0} ? 'campeon-inactivo' : ''">
+                            <td th:text="${runa.Id_runa}">ID</td>
+                            <td th:text="${runa.nombre_runa}">Nombre</td>
+                            <td th:text="${runa.descripcion_runa}">Descripción</td>
+                            <td th:text="${runa.tipo_runa}">Tipo</td>
+                            <td th:text="${runa.categoria?.nombre_categoria}">Categoría</td>
+                            <td>
+                                <span th:if="${runa.estado == 1}" class="estado-activo">Activo</span>
+                                <span th:if="${runa.estado == 0}" class="estado-inactivo">Inactivo</span>
+                            </td>
+                            <td class="acciones-cell">
+                                <a th:href="@{'/admin/runas/editar/' + ${runa.Id_runa}}" class="btn btn-warning btn-sm">Editar</a>
+                                <a th:if="${runa.estado == 1}" th:href="@{'/admin/runas/desactivar/' + ${runa.Id_runa}}" class="btn btn-danger btn-sm" onclick="return confirm('¿Desactivar esta runa?')">Desactivar</a>
+                                <a th:if="${runa.estado == 0}" th:href="@{'/admin/runas/activar/' + ${runa.Id_runa}}" class="btn btn-success btn-sm" onclick="return confirm('¿Activar esta runa?')">Activar</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div th:if="${#lists.isEmpty(runas)}" class="no-data-message">
+                    <p>No hay runas registradas</p>
+                    <a th:href="@{/admin/runas/form}" class="btn btn-primary">Agregar la primera runa</a>
+                </div>
             </div>
+        </main>
+    </div>
 
-            <div th:if="${mensaje}" class="alert alert-success">
-                <span th:text="${mensaje}">Mensaje</span>
-            </div>
-
-            <table class="admin-table">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nombre</th>
-                        <th>Descripción</th>
-                        <th>Tipo</th>
-                        <th>Categoría</th>
-                        <th>Estado</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="runa : ${runas}" th:class="${runa.estado == 0} ? 'campeon-inactivo' : ''">
-                        <td th:text="${runa.Id_runa}">ID</td>
-                        <td th:text="${runa.nombre_runa}">Nombre</td>
-                        <td th:text="${runa.descripcion_runa}">Descripción</td>
-                        <td th:text="${runa.tipo_runa}">Tipo</td>
-                        <td th:text="${runa.categoria?.nombre_categoria}">Categoría</td>
-                        <td>
-                            <span th:if="${runa.estado == 1}" class="estado-activo">Activo</span>
-                            <span th:if="${runa.estado == 0}" class="estado-inactivo">Inactivo</span>
-                        </td>
-                        <td>
-                            <a th:href="@{'/admin/runas/editar/' + ${runa.Id_runa}}" class="btn btn-warning">Editar</a>
-                            <a th:if="${runa.estado == 1}" th:href="@{'/admin/runas/desactivar/' + ${runa.Id_runa}}" class="btn btn-danger" onclick="return confirm('¿Desactivar esta runa?')">Desactivar</a>
-                            <a th:if="${runa.estado == 0}" th:href="@{'/admin/runas/activar/' + ${runa.Id_runa}}" class="btn btn-success" onclick="return confirm('¿Activar esta runa?')">Activar</a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <div th:if="${#lists.isEmpty(runas)}" class="no-data-message">
-                <p>No hay runas registradas</p>
-                <a th:href="@{/admin/runas/form}" class="btn btn-primary">Agregar la primera runa</a>
-            </div>
-        </div>
-    </main>
+    <script>
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+            document.getElementById('sidebarOverlay').classList.toggle('show');
+        }
+    </script>
 </body>
 </html>

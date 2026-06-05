@@ -6,59 +6,70 @@
     <title>Administrar Categorías de Runas - League of Legends</title>
     <link rel="icon" type="image/svg+xml" th:href="@{/favicon.svg}">
     <link rel="shortcut icon" type="image/svg+xml" th:href="@{/favicon.svg}">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/normalize.css?v=4.0}">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/base.css?v=4.0}">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/admin.css?v=4.0}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/normalize.css?v=5.0}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin.css?v=5.0}">
 </head>
 <body class="admin-body">
-    <main>
-        <div class="admin-container">
-            <h1>Administrar Categorías de Runas</h1>
+    <div class="admin-layout">
+        <div th:replace="~{admin/fragments :: sidebar('categorias')}"></div>
+        <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
 
-            <div class="admin-nav">
-                <a th:href="@{/admin/categorias/form}" class="btn btn-primary">Agregar Nueva Categoría</a>
-                <a th:href="@{/admin/dashboard}" class="btn btn-secondary">Volver al Dashboard</a>
+        <main class="admin-main">
+            <div class="admin-container">
+                <div class="page-header">
+                    <h1>Administrar Categorías de Runas</h1>
+                    <div class="header-actions">
+                        <a th:href="@{/admin/categorias/form}" class="btn btn-primary">+ Agregar Nueva</a>
+                    </div>
+                </div>
+
+                <div th:if="${mensaje}" class="alert alert-success">
+                    <span th:text="${mensaje}">Mensaje</span>
+                </div>
+
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Descripción</th>
+                            <th>Color</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="cat : ${categorias}" th:class="${cat.estado == 0} ? 'campeon-inactivo' : ''">
+                            <td th:text="${cat.id_categoria}">ID</td>
+                            <td th:text="${cat.nombre_categoria}">Nombre</td>
+                            <td th:text="${cat.descripcion}">Descripción</td>
+                            <td th:text="${cat.color}" th:style="'color: ' + ${cat.color}">Color</td>
+                            <td>
+                                <span th:if="${cat.estado == 1}" class="estado-activo">Activo</span>
+                                <span th:if="${cat.estado == 0}" class="estado-inactivo">Inactivo</span>
+                            </td>
+                            <td class="acciones-cell">
+                                <a th:href="@{'/admin/categorias/editar/' + ${cat.id_categoria}}" class="btn btn-warning btn-sm">Editar</a>
+                                <a th:if="${cat.estado == 1}" th:href="@{'/admin/categorias/desactivar/' + ${cat.id_categoria}}" class="btn btn-danger btn-sm" onclick="return confirm('¿Desactivar esta categoría?')">Desactivar</a>
+                                <a th:if="${cat.estado == 0}" th:href="@{'/admin/categorias/activar/' + ${cat.id_categoria}}" class="btn btn-success btn-sm" onclick="return confirm('¿Activar esta categoría?')">Activar</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div th:if="${#lists.isEmpty(categorias)}" class="no-data-message">
+                    <p>No hay categorías registradas</p>
+                    <a th:href="@{/admin/categorias/form}" class="btn btn-primary">Agregar la primera categoría</a>
+                </div>
             </div>
+        </main>
+    </div>
 
-            <div th:if="${mensaje}" class="alert alert-success">
-                <span th:text="${mensaje}">Mensaje</span>
-            </div>
-
-            <table class="admin-table">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nombre</th>
-                        <th>Descripción</th>
-                        <th>Color</th>
-                        <th>Estado</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="cat : ${categorias}" th:class="${cat.estado == 0} ? 'campeon-inactivo' : ''">
-                        <td th:text="${cat.id_categoria}">ID</td>
-                        <td th:text="${cat.nombre_categoria}">Nombre</td>
-                        <td th:text="${cat.descripcion}">Descripción</td>
-                        <td th:text="${cat.color}" th:style="'color: ' + ${cat.color}">Color</td>
-                        <td>
-                            <span th:if="${cat.estado == 1}" class="estado-activo">Activo</span>
-                            <span th:if="${cat.estado == 0}" class="estado-inactivo">Inactivo</span>
-                        </td>
-                        <td>
-                            <a th:href="@{'/admin/categorias/editar/' + ${cat.id_categoria}}" class="btn btn-warning">Editar</a>
-                            <a th:if="${cat.estado == 1}" th:href="@{'/admin/categorias/desactivar/' + ${cat.id_categoria}}" class="btn btn-danger" onclick="return confirm('¿Desactivar esta categoría?')">Desactivar</a>
-                            <a th:if="${cat.estado == 0}" th:href="@{'/admin/categorias/activar/' + ${cat.id_categoria}}" class="btn btn-success" onclick="return confirm('¿Activar esta categoría?')">Activar</a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <div th:if="${#lists.isEmpty(categorias)}" class="no-data-message">
-                <p>No hay categorías registradas</p>
-                <a th:href="@{/admin/categorias/form}" class="btn btn-primary">Agregar la primera categoría</a>
-            </div>
-        </div>
-    </main>
+    <script>
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+            document.getElementById('sidebarOverlay').classList.toggle('show');
+        }
+    </script>
 </body>
 </html>

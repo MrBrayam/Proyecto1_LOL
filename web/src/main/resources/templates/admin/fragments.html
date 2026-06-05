@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="sidebar(currentPage)">
+    <aside class="admin-sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-brand">
+                <div class="brand-icon">LoL</div>
+                <div class="brand-text">
+                    <span class="brand-title">Admin Panel</span>
+                    <span class="brand-subtitle">League of Legends</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="sidebar-user" th:if="${admin != null}">
+            <div class="user-avatar" th:text="${#strings.substring(admin.nombre, 0, 1)}">A</div>
+            <div class="user-info">
+                <span class="user-name" th:text="${admin.nombre}">Admin</span>
+                <span class="user-role">Administrador</span>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a th:href="@{/admin/dashboard}" class="sidebar-link" th:classappend="${currentPage == 'dashboard' ? 'active' : ''}">
+                <span class="link-icon">D</span>
+                <span class="link-text">Dashboard</span>
+            </a>
+            <a th:href="@{/admin/campeones}" class="sidebar-link" th:classappend="${currentPage == 'campeones' ? 'active' : ''}">
+                <span class="link-icon">C</span>
+                <span class="link-text">Campeones</span>
+            </a>
+            <a th:href="@{/admin/admins}" class="sidebar-link" th:classappend="${currentPage == 'admins' ? 'active' : ''}">
+                <span class="link-icon">A</span>
+                <span class="link-text">Administradores</span>
+            </a>
+            <a th:href="@{/admin/runas}" class="sidebar-link" th:classappend="${currentPage == 'runas' ? 'active' : ''}">
+                <span class="link-icon">R</span>
+                <span class="link-text">Runas</span>
+            </a>
+            <a th:href="@{/admin/categorias}" class="sidebar-link" th:classappend="${currentPage == 'categorias' ? 'active' : ''}">
+                <span class="link-icon">T</span>
+                <span class="link-text">Categorías</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <a th:href="@{/}" class="sidebar-link">
+                <span class="link-icon">S</span>
+                <span class="link-text">Ver Sitio Web</span>
+            </a>
+            <a th:href="@{/admin/logout}" class="sidebar-link logout-link"
+               onclick="return confirm('¿Cerrar sesión?')">
+                <span class="link-icon">X</span>
+                <span class="link-text">Cerrar Sesión</span>
+            </a>
+        </div>
+    </aside>
+
+    <button class="sidebar-toggle" id="sidebarToggle" onclick="toggleSidebar()">☰</button>
+</div>
+</body>
+</html>
