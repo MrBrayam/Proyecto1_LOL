@@ -37,6 +37,6 @@ public class RunasService implements IRunasService {
     }
 
     public List<Runas> buscarPorCategoria(Integer idCategoria) {
-        return repoRunas.findByCategoria_Id_categoriaOrderByTipo_runa(idCategoria);
+        return repoRunas.findByCategoriaId(idCategoria);
     }
 }

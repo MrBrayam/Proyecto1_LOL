@@ -160,7 +160,7 @@ public class AdminCampeonController {
                 campeon.setRutaimg(rutaImagen);
             }
 
-            campeonService.save(campeon);
+            campeonService.guardar(campeon);
             System.out.println("Campeón guardado exitosamente con ID: " + campeon.getIdCampeon());
             
             return "redirect:/admin/campeones";
@@ -178,7 +178,7 @@ public class AdminCampeonController {
             return "redirect:/admin/login";
         }
         
-        Optional<Campeon> campeonOpt = campeonService.findById(id);
+        Optional<Campeon> campeonOpt = campeonService.buscarId(id);
         if (campeonOpt.isPresent()) {
             model.addAttribute("campeon", campeonOpt.get());
             return "admin/campeones/form";
@@ -199,7 +199,7 @@ public class AdminCampeonController {
         }
         
         try {
-            Optional<Campeon> opt = campeonService.findById(idCampeon);
+            Optional<Campeon> opt = campeonService.buscarId(idCampeon);
             if (opt.isPresent()) {
                 Campeon campeon = opt.get();
                 campeon.setNombreCampeon(nombreCampeon);
@@ -210,7 +210,7 @@ public class AdminCampeonController {
                     campeon.setRutaimg(rutaImagen);
                 }
                 
-                campeonService.save(campeon);
+                campeonService.guardar(campeon);
                 System.out.println("Campeón actualizado: " + nombreCampeon);
             }
             return "redirect:/admin/campeones";
@@ -231,8 +231,8 @@ public class AdminCampeonController {
             System.out.println("=== DESACTIVANDO CAMPEÓN ===");
             System.out.println("ID: " + id);
             
-            int filasAfectadas = campeonService.desactivarCampeon(id);
-            System.out.println("Filas afectadas: " + filasAfectadas);
+            campeonService.desactivarCampeon(id);
+            System.out.println("Desactivación ejecutada correctamente");
             
         } catch (Exception e) {
             System.err.println("ERROR AL DESACTIVAR: " + e.getMessage());

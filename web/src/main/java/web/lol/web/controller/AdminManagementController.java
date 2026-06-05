@@ -14,28 +14,28 @@ import java.util.Optional;
 @Controller
 @RequestMapping("/admin/admins")
 public class AdminManagementController {
-    
+
     @Autowired
     private IAdminService adminService;
-    
+
     private boolean verificarSesion(HttpSession session) {
         return session.getAttribute("adminLogueado") != null;
     }
-    
+
     @GetMapping
     public String listarAdmins(Model model, HttpSession session) {
         if (!verificarSesion(session)) {
             return "redirect:/admin/login";
         }
-        
+
         try {
             List<Admin> admins = adminService.obtenerTodosAdminsParaAdmin();
             Admin adminLogueado = (Admin) session.getAttribute("adminLogueado");
-            
+
             model.addAttribute("admins", admins);
             model.addAttribute("adminLogueado", adminLogueado);
             model.addAttribute("title", "Gestionar Administradores");
-            
+
             return "admin/admins/index";
         } catch (Exception e) {
             System.err.println("Error al listar administradores: " + e.getMessage());
@@ -43,26 +43,26 @@ public class AdminManagementController {
             return "admin/dashboard";
         }
     }
-    
+
     @GetMapping("/form")
     public String mostrarFormularioNuevo(Model model, HttpSession session) {
         if (!verificarSesion(session)) {
             return "redirect:/admin/login";
         }
-        
+
         model.addAttribute("admin", new Admin());
         model.addAttribute("title", "Nuevo Administrador");
         return "admin/admins/form";
     }
-    
+
     @GetMapping("/editar/{id}")
     public String mostrarFormularioEditar(@PathVariable Integer id, Model model, HttpSession session) {
         if (!verificarSesion(session)) {
             return "redirect:/admin/login";
         }
-        
+
         try {
-            Optional<Admin> adminOpt = adminService.obtenerAdminPorId(id);
+            Optional<Admin> adminOpt = adminService.buscarId(id);
             if (adminOpt.isPresent()) {
                 model.addAttribute("admin", adminOpt.get());
                 model.addAttribute("title", "Editar Administrador");
@@ -77,22 +77,22 @@ public class AdminManagementController {
             return "redirect:/admin/admins";
         }
     }
-    
+
     @PostMapping("/create")
-    public String crearAdmin(@ModelAttribute Admin admin, 
+    public String crearAdmin(@ModelAttribute Admin admin,
                             @RequestParam(value = "confirmarContrasena", required = false) String confirmarContrasena,
-                            HttpSession session, 
+                            HttpSession session,
                             RedirectAttributes redirectAttributes) {
         if (!verificarSesion(session)) {
             return "redirect:/admin/login";
         }
-        
+
         try {
             if (!admin.getContrasena().equals(confirmarContrasena)) {
                 redirectAttributes.addFlashAttribute("error", "Las contraseñas no coinciden");
                 return "redirect:/admin/admins/form";
             }
-            
+
             adminService.crearAdmin(admin);
             redirectAttributes.addFlashAttribute("mensaje", "Administrador creado exitosamente");
             return "redirect:/admin/admins";
@@ -105,19 +105,19 @@ public class AdminManagementController {
             return "redirect:/admin/admins/form";
         }
     }
-    
+
     @PostMapping("/update")
-    public String actualizarAdmin(@ModelAttribute Admin admin, 
+    public String actualizarAdmin(@ModelAttribute Admin admin,
                                  @RequestParam(value = "confirmarContrasena", required = false) String confirmarContrasena,
-                                 HttpSession session, 
+                                 HttpSession session,
                                  RedirectAttributes redirectAttributes) {
         if (!verificarSesion(session)) {
             return "redirect:/admin/login";
         }
-        
+
         try {
             if (admin.getContrasena() == null || admin.getContrasena().trim().isEmpty()) {
-                Optional<Admin> adminActualOpt = adminService.obtenerAdminPorId(admin.getIdAdmin());
+                Optional<Admin> adminActualOpt = adminService.buscarId(admin.getIdAdmin());
                 if (adminActualOpt.isPresent()) {
                     admin.setContrasena(adminActualOpt.get().getContrasena());
                 }
@@ -127,7 +127,7 @@ public class AdminManagementController {
                     return "redirect:/admin/admins/editar/" + admin.getIdAdmin();
                 }
             }
-            
+
             adminService.guardarAdmin(admin);
             redirectAttributes.addFlashAttribute("mensaje", "Administrador actualizado exitosamente");
             return "redirect:/admin/admins";
@@ -140,13 +140,13 @@ public class AdminManagementController {
             return "redirect:/admin/admins/editar/" + admin.getIdAdmin();
         }
     }
-    
+
     @GetMapping("/activar/{id}")
     public String activarAdmin(@PathVariable Integer id, HttpSession session, RedirectAttributes redirectAttributes) {
         if (!verificarSesion(session)) {
             return "redirect:/admin/login";
         }
-        
+
         try {
             boolean resultado = adminService.activarAdmin(id);
             if (resultado) {
@@ -158,29 +158,29 @@ public class AdminManagementController {
             System.err.println("Error al activar administrador: " + e.getMessage());
             redirectAttributes.addFlashAttribute("error", "Error al activar el administrador");
         }
-        
+
         return "redirect:/admin/admins";
     }
-    
+
     @GetMapping("/desactivar/{id}")
     public String desactivarAdmin(@PathVariable Integer id, HttpSession session, RedirectAttributes redirectAttributes) {
         if (!verificarSesion(session)) {
             return "redirect:/admin/login";
         }
-        
+
         try {
             Admin adminActual = (Admin) session.getAttribute("adminLogueado");
             if (adminActual.getIdAdmin().equals(id)) {
                 redirectAttributes.addFlashAttribute("error", "No puedes desactivar tu propia cuenta");
                 return "redirect:/admin/admins";
             }
-            
+
             List<Admin> adminsActivos = adminService.obtenerTodosAdmins();
             if (adminsActivos.size() <= 1) {
                 redirectAttributes.addFlashAttribute("error", "No se puede desactivar el último administrador activo");
                 return "redirect:/admin/admins";
             }
-            
+
             boolean resultado = adminService.desactivarAdmin(id);
             if (resultado) {
                 redirectAttributes.addFlashAttribute("mensaje", "Administrador desactivado exitosamente");
@@ -191,7 +191,7 @@ public class AdminManagementController {
             System.err.println("Error al desactivar administrador: " + e.getMessage());
             redirectAttributes.addFlashAttribute("error", "Error al desactivar el administrador");
         }
-        
+
         return "redirect:/admin/admins";
     }
 }

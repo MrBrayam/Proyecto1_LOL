@@ -2,8 +2,13 @@ package web.lol.web.model;
 
 import java.util.List;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,6 +21,8 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "categorias_runas")
+@SQLDelete(sql = "UPDATE categorias_runas SET estado=0 WHERE id_categoria=?")
+@SQLRestriction("estado = 1")
 @JsonPropertyOrder({
     "id_categoria",
     "nombre_categoria",

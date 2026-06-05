@@ -24,7 +24,19 @@ public class CategoriaRunasService implements ICategoriaRunasService {
         return repoCategoria.findById(id);
     }
 
+    public void guardar(CategoriaRunas categoria) {
+        repoCategoria.save(categoria);
+    }
+
+    public void modificar(CategoriaRunas categoria) {
+        repoCategoria.save(categoria);
+    }
+
+    public void eliminar(Integer id) {
+        repoCategoria.deleteById(id);
+    }
+
     public Optional<CategoriaRunas> buscarPorNombre(String nombre) {
-        return repoCategoria.findByNombre_categoriaIgnoreCase(nombre);
+        return repoCategoria.findByNombreCategoriaIgnoreCase(nombre);
     }
 }
