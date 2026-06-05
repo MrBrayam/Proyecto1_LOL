@@ -35,4 +35,8 @@ public class RunasService implements IRunasService {
     public void eliminar(Integer id) {
         repoRunas.deleteById(id);
     }
+
+    public List<Runas> buscarPorCategoria(Integer idCategoria) {
+        return repoRunas.findByCategoria_Id_categoriaOrderByTipo_runa(idCategoria);
+    }
 }

@@ -9,8 +9,8 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "administradores")
-@SQLDelete(sql = "UPDATE administradores SET Estado=0 WHERE Id_Admin=?")
-@SQLRestriction("Estado = 1")
+@SQLDelete(sql = "UPDATE administradores SET estado=0 WHERE Id_Admin=?")
+@SQLRestriction("estado = 1")
 @JsonPropertyOrder({
     "idAdmin",
     "nombre",
@@ -29,7 +29,7 @@ public class Admin {
     @Column(name = "Contrasena", length = 25, nullable = false)
     private String contrasena;
 
-    @Column(name = "Estado")
+    @Column(name = "estado")
     private Integer estado = 1;
 
     public Admin() {}

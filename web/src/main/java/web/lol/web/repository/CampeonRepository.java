@@ -37,11 +37,11 @@ public interface CampeonRepository extends JpaRepository<Campeon, Integer> {
     
     @Modifying
     @Transactional
-    @Query(value = "UPDATE campeones SET Estado = 1 WHERE ID_Campeon = :id", nativeQuery = true)
+    @Query(value = "UPDATE campeones SET estado = 1 WHERE ID_Campeon = :id", nativeQuery = true)
     int activarCampeon(@Param("id") Integer id);
     
     @Modifying
     @Transactional
-    @Query(value = "UPDATE campeones SET Estado = 0 WHERE ID_Campeon = :id", nativeQuery = true)
+    @Query(value = "UPDATE campeones SET estado = 0 WHERE ID_Campeon = :id", nativeQuery = true)
     int desactivarCampeon(@Param("id") Integer id);
 }

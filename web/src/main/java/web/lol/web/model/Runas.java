@@ -1,5 +1,6 @@
 package web.lol.web.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import jakarta.persistence.*;
 
@@ -9,7 +10,7 @@ import org.hibernate.annotations.SQLRestriction;
 @Entity
 @Table(name = "runas")
 
-@SQLDelete(sql = "UPDATE runas SET estado=0 WHERE id=?")
+@SQLDelete(sql = "UPDATE runas SET estado=0 WHERE Id_runa=?")
 @SQLRestriction("estado = 1")
 
 @JsonPropertyOrder({
@@ -23,6 +24,12 @@ public class Runas {
     private String nombre_runa;
     private String descripcion_runa;
     private String tipo_runa;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_categoria")
+    @JsonIgnoreProperties({"runas", "hibernateLazyInitializer", "handler"})
+    private CategoriaRunas categoria;
+
     private String url_img;
     private Integer estado = 1;
     
@@ -56,6 +63,14 @@ public class Runas {
     public void setUrl_img(String url_img) {
         this.url_img = url_img;
     }
+    public CategoriaRunas getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(CategoriaRunas categoria) {
+        this.categoria = categoria;
+    }
+
     public Integer getEstado() {
         return estado;
     }

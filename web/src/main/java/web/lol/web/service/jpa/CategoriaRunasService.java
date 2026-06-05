@@ -1,0 +1,30 @@
+package web.lol.web.service.jpa;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import web.lol.web.model.CategoriaRunas;
+import web.lol.web.repository.CategoriaRunasRepository;
+import web.lol.web.service.ICategoriaRunasService;
+
+@Service
+public class CategoriaRunasService implements ICategoriaRunasService {
+
+    @Autowired
+    private CategoriaRunasRepository repoCategoria;
+
+    public List<CategoriaRunas> buscarTodos() {
+        return repoCategoria.findAll();
+    }
+
+    public Optional<CategoriaRunas> buscarId(Integer id) {
+        return repoCategoria.findById(id);
+    }
+
+    public Optional<CategoriaRunas> buscarPorNombre(String nombre) {
+        return repoCategoria.findByNombre_categoriaIgnoreCase(nombre);
+    }
+}

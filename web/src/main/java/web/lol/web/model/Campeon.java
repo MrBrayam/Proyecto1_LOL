@@ -9,8 +9,8 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "campeones")
-@SQLDelete(sql = "UPDATE campeones SET Estado=0 WHERE ID_Campeon=?")
-@SQLRestriction("Estado = 1")
+@SQLDelete(sql = "UPDATE campeones SET estado=0 WHERE ID_Campeon=?")
+@SQLRestriction("estado = 1")
 @JsonPropertyOrder({
     "idCampeon",
     "nombreCampeon",
@@ -32,7 +32,7 @@ public class Campeon {
     @Column(name = "Descripcion_Campeon", length = 150)
     private String descripcionCampeon;
 
-    @Column(name = "Estado")
+    @Column(name = "estado")
     private Integer estado = 1;
 
     @Column(name = "rutaimg", length = 200)

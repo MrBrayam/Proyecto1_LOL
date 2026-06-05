@@ -26,10 +26,10 @@
                 <div class="runas-grid">
                     <div class="runa-card" th:each="runa : ${runasClaves}">
                         <div class="runa-header">
-                            <img th:src="${runa.imagen}" th:alt="${runa.nombre}" class="runa-imagen" th:style="'border-color: ' + ${color}">
-                            <h3 class="runa-nombre" th:text="${runa.nombre}">Nombre de la Runa</h3>
+                            <img th:src="${runa.url_img}" th:alt="${runa.nombre_runa}" class="runa-imagen" th:style="'border-color: ' + ${color}">
+                            <h3 class="runa-nombre" th:text="${runa.nombre_runa}">Nombre de la Runa</h3>
                         </div>
-                        <p class="runa-descripcion" th:text="${runa.descripcion}">Descripción de la runa</p>
+                        <p class="runa-descripcion" th:text="${runa.descripcion_runa}">Descripción de la runa</p>
                     </div>
                 </div>
             </div>
@@ -40,10 +40,10 @@
                 <div class="runas-grid">
                     <div class="runa-card" th:each="runa : ${runasSegundaFila}">
                         <div class="runa-header">
-                            <img th:src="${runa.imagen}" th:alt="${runa.nombre}" class="runa-imagen" th:style="'border-color: ' + ${color}">
-                            <h3 class="runa-nombre" th:text="${runa.nombre}">Nombre de la Runa</h3>
+                            <img th:src="${runa.url_img}" th:alt="${runa.nombre_runa}" class="runa-imagen" th:style="'border-color: ' + ${color}">
+                            <h3 class="runa-nombre" th:text="${runa.nombre_runa}">Nombre de la Runa</h3>
                         </div>
-                        <p class="runa-descripcion" th:text="${runa.descripcion}">Descripción de la runa</p>
+                        <p class="runa-descripcion" th:text="${runa.descripcion_runa}">Descripción de la runa</p>
                     </div>
                 </div>
             </div>
@@ -54,10 +54,10 @@
                 <div class="runas-grid">
                     <div class="runa-card" th:each="runa : ${runasTerceraFila}">
                         <div class="runa-header">
-                            <img th:src="${runa.imagen}" th:alt="${runa.nombre}" class="runa-imagen" th:style="'border-color: ' + ${color}">
-                            <h3 class="runa-nombre" th:text="${runa.nombre}">Nombre de la Runa</h3>
+                            <img th:src="${runa.url_img}" th:alt="${runa.nombre_runa}" class="runa-imagen" th:style="'border-color: ' + ${color}">
+                            <h3 class="runa-nombre" th:text="${runa.nombre_runa}">Nombre de la Runa</h3>
                         </div>
-                        <p class="runa-descripcion" th:text="${runa.descripcion}">Descripción de la runa</p>
+                        <p class="runa-descripcion" th:text="${runa.descripcion_runa}">Descripción de la runa</p>
                     </div>
                 </div>
             </div>
@@ -68,10 +68,10 @@
                 <div class="runas-grid">
                     <div class="runa-card" th:each="runa : ${runasCuartaFila}">
                         <div class="runa-header">
-                            <img th:src="${runa.imagen}" th:alt="${runa.nombre}" class="runa-imagen" th:style="'border-color: ' + ${color}">
-                            <h3 class="runa-nombre" th:text="${runa.nombre}">Nombre de la Runa</h3>
+                            <img th:src="${runa.url_img}" th:alt="${runa.nombre_runa}" class="runa-imagen" th:style="'border-color: ' + ${color}">
+                            <h3 class="runa-nombre" th:text="${runa.nombre_runa}">Nombre de la Runa</h3>
                         </div>
-                        <p class="runa-descripcion" th:text="${runa.descripcion}">Descripción de la runa</p>
+                        <p class="runa-descripcion" th:text="${runa.descripcion_runa}">Descripción de la runa</p>
                     </div>
                 </div>
             </div>

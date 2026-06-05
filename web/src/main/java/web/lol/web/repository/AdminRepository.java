@@ -24,20 +24,20 @@ public interface AdminRepository extends JpaRepository<Admin, Integer> {
     
     @Modifying
     @Transactional
-    @Query(value = "UPDATE administradores SET Estado = 1 WHERE Id_Admin = :id", nativeQuery = true)
+    @Query(value = "UPDATE administradores SET estado = 1 WHERE Id_Admin = :id", nativeQuery = true)
     int activarAdmin(@Param("id") Integer id);
     
     @Modifying
     @Transactional
-    @Query(value = "UPDATE administradores SET Estado = 0 WHERE Id_Admin = :id", nativeQuery = true)
+    @Query(value = "UPDATE administradores SET estado = 0 WHERE Id_Admin = :id", nativeQuery = true)
     int desactivarAdmin(@Param("id") Integer id);
     
-    @Query(value = "SELECT * FROM administradores WHERE Nombre = :nombre AND Contrasena = :contrasena AND Estado = 1", nativeQuery = true)
+    @Query(value = "SELECT * FROM administradores WHERE Nombre = :nombre AND Contrasena = :contrasena AND estado = 1", nativeQuery = true)
     Optional<Admin> validarCredenciales(@Param("nombre") String nombre, @Param("contrasena") String contrasena);
     
     @Query(value = "SELECT * FROM administradores WHERE Nombre = :nombre", nativeQuery = true)
     Optional<Admin> findByNombreNative(@Param("nombre") String nombre);
     
-    @Query(value = "SELECT * FROM administradores WHERE Nombre = :nombre AND Estado = :estado", nativeQuery = true)
+    @Query(value = "SELECT * FROM administradores WHERE Nombre = :nombre AND estado = :estado", nativeQuery = true)
     Optional<Admin> findByNombreAndEstadoNative(@Param("nombre") String nombre, @Param("estado") Integer estado);
 }

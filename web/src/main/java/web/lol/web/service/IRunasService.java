@@ -11,4 +11,5 @@ public interface IRunasService {
     void modificar(Runas runas);
     Optional<Runas> buscarId(Integer id);
     void eliminar(Integer id);
+    List<Runas> buscarPorCategoria(Integer idCategoria);
 }
