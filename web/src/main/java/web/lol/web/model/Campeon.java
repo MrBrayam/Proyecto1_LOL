@@ -1,11 +1,25 @@
 package web.lol.web.model;
 
 import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
+
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "campeones")
 @SQLDelete(sql = "UPDATE campeones SET Estado=0 WHERE ID_Campeon=?")
+@SQLRestriction("Estado = 1")
+@JsonPropertyOrder({
+    "idCampeon",
+    "nombreCampeon",
+    "descripcionCampeon",
+    "rutaimg",
+    "imagenPath",
+    "letra",
+    "estado"
+})
 public class Campeon {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

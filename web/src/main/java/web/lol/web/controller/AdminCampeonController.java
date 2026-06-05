@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import web.lol.web.model.Admin;
 import web.lol.web.model.Campeon;
-import web.lol.web.repository.CampeonRepository;
+import web.lol.web.service.ICampeonService;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.File;
@@ -28,7 +28,7 @@ import java.util.Optional;
 public class AdminCampeonController {
 
     @Autowired
-    private CampeonRepository campeonRepository;
+    private ICampeonService campeonService;
 
     private static final String UPLOAD_DIR = "src/main/resources/static/img/uploads/";
 
@@ -57,7 +57,7 @@ public class AdminCampeonController {
             Page<Campeon> campeonesPage;
             
             try {
-                campeonesPage = campeonRepository.findAllForAdminPaginatedNative(pageable);
+                campeonesPage = campeonService.findAllForAdminPaginatedNative(pageable);
                 
                 System.out.println("=== PAGINACIÓN EXITOSA ===");
                 System.out.println("Página: " + page + ", Tamaño: " + size);
@@ -71,7 +71,7 @@ public class AdminCampeonController {
                 System.err.println("ERROR en paginación nativa: " + e.getMessage());
                 e.printStackTrace();
                 
-                List<Campeon> campeones = campeonRepository.findAllForAdmin();
+                List<Campeon> campeones = campeonService.findAllForAdmin();
                 model.addAttribute("campeones", campeones);
                 model.addAttribute("totalElements", campeones.size());
                 model.addAttribute("currentPage", 0);
@@ -104,7 +104,7 @@ public class AdminCampeonController {
             e.printStackTrace();
             
             try {
-                List<Campeon> campeones = campeonRepository.findAllForAdmin();
+                List<Campeon> campeones = campeonService.findAllForAdmin();
                 model.addAttribute("campeones", campeones);
                 model.addAttribute("totalElements", campeones.size());
                 model.addAttribute("currentPage", 0);
@@ -160,7 +160,7 @@ public class AdminCampeonController {
                 campeon.setRutaimg(rutaImagen);
             }
 
-            campeonRepository.save(campeon);
+            campeonService.save(campeon);
             System.out.println("Campeón guardado exitosamente con ID: " + campeon.getIdCampeon());
             
             return "redirect:/admin/campeones";
@@ -178,7 +178,7 @@ public class AdminCampeonController {
             return "redirect:/admin/login";
         }
         
-        Optional<Campeon> campeonOpt = campeonRepository.findById(id);
+        Optional<Campeon> campeonOpt = campeonService.findById(id);
         if (campeonOpt.isPresent()) {
             model.addAttribute("campeon", campeonOpt.get());
             return "admin/campeones/form";
@@ -199,7 +199,7 @@ public class AdminCampeonController {
         }
         
         try {
-            Optional<Campeon> opt = campeonRepository.findById(idCampeon);
+            Optional<Campeon> opt = campeonService.findById(idCampeon);
             if (opt.isPresent()) {
                 Campeon campeon = opt.get();
                 campeon.setNombreCampeon(nombreCampeon);
@@ -210,7 +210,7 @@ public class AdminCampeonController {
                     campeon.setRutaimg(rutaImagen);
                 }
                 
-                campeonRepository.save(campeon);
+                campeonService.save(campeon);
                 System.out.println("Campeón actualizado: " + nombreCampeon);
             }
             return "redirect:/admin/campeones";
@@ -231,7 +231,7 @@ public class AdminCampeonController {
             System.out.println("=== DESACTIVANDO CAMPEÓN ===");
             System.out.println("ID: " + id);
             
-            int filasAfectadas = campeonRepository.desactivarCampeon(id);
+            int filasAfectadas = campeonService.desactivarCampeon(id);
             System.out.println("Filas afectadas: " + filasAfectadas);
             
         } catch (Exception e) {
@@ -251,7 +251,7 @@ public class AdminCampeonController {
             System.out.println("=== INTENTANDO ACTIVAR CAMPEÓN ===");
             System.out.println("ID: " + id);
             
-            campeonRepository.activarCampeon(id);
+            campeonService.activarCampeon(id);
             System.out.println("Comando de activación enviado");
             
         } catch (Exception e) {

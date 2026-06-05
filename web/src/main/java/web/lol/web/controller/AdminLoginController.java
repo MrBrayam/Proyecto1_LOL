@@ -6,7 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import web.lol.web.model.Admin;
-import web.lol.web.service.AdminService;
+import web.lol.web.service.IAdminService;
 import jakarta.servlet.http.HttpSession;
 import java.util.Optional;
 
@@ -15,7 +15,7 @@ import java.util.Optional;
 public class AdminLoginController {
     
     @Autowired
-    private AdminService adminService;
+    private IAdminService adminService;
     
     @GetMapping("/login")
     public String mostrarLogin(Model model, HttpSession session, 

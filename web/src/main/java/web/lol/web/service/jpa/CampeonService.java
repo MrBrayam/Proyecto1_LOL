@@ -1,25 +1,53 @@
-package web.lol.web.service;
+package web.lol.web.service.jpa;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import web.lol.web.model.Campeon;
-import web.lol.web.repository.CampeonRepository;
-import jakarta.annotation.PostConstruct;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
+import jakarta.annotation.PostConstruct;
+import web.lol.web.model.Campeon;
+import web.lol.web.repository.CampeonRepository;
+import web.lol.web.service.ICampeonService;
+
 @Service
-public class CampeonService {
-    
+public class CampeonService implements ICampeonService {
+
     @Autowired
     private CampeonRepository campeonRepository;
-    
+
+    public List<Campeon> buscarTodos() {
+        return campeonRepository.findAll();
+    }
+
+    public void guardar(Campeon campeon) {
+        campeonRepository.save(campeon);
+    }
+
+    public void modificar(Campeon campeon) {
+        campeonRepository.save(campeon);
+    }
+
+    public Optional<Campeon> buscarId(Integer id) {
+        return campeonRepository.findById(id);
+    }
+
+    public void eliminar(Integer id) {
+        campeonRepository.deleteById(id);
+    }
+
     public List<Campeon> obtenerTodosCampeones() {
         try {
             List<Campeon> campeones = campeonRepository.findAllByOrderByNombreCampeon();
             System.out.println("Campeones obtenidos de la BD: " + campeones.size());
-            
-            // Asignar rutas de imagen y letra basado en el nombre
+
             campeones.forEach(this::asignarDatosAdicionales);
             return campeones;
         } catch (Exception e) {
@@ -28,19 +56,19 @@ public class CampeonService {
             return new ArrayList<>();
         }
     }
-    
+
     public Map<String, List<Campeon>> obtenerCampeonesPorLetra() {
         try {
             List<Campeon> campeones = obtenerTodosCampeones();
             System.out.println("Procesando " + campeones.size() + " campeones para agrupar por letra");
-            
+
             Map<String, List<Campeon>> resultado = campeones.stream()
                     .collect(Collectors.groupingBy(
                         campeon -> campeon.getNombreCampeon().substring(0, 1).toUpperCase(),
-                        TreeMap::new, 
+                        TreeMap::new,
                         Collectors.toList()
                     ));
-                    
+
             System.out.println("Grupos creados: " + resultado.keySet());
             return resultado;
         } catch (Exception e) {
@@ -49,54 +77,65 @@ public class CampeonService {
             return new TreeMap<>();
         }
     }
-    
+
     public List<Campeon> buscarCampeonesPorNombre(String nombre) {
         List<Campeon> campeones = campeonRepository.findByNombreCampeonContainingIgnoreCase(nombre);
         campeones.forEach(this::asignarDatosAdicionales);
         return campeones;
     }
-    
+
     private void asignarDatosAdicionales(Campeon campeon) {
         String nombre = campeon.getNombreCampeon();
-        // Asignar letra
         campeon.setLetra(nombre.substring(0, 1).toUpperCase());
-        
-        // Priorizar imagen subida por admin, sino usar imagen por defecto
+
         if (campeon.getRutaimg() != null && !campeon.getRutaimg().trim().isEmpty()) {
-            // Usar imagen subida desde el admin
             campeon.setImagenPath(campeon.getRutaimg());
         } else {
-            // Usar imagen por defecto basada en el nombre del campeón
             String nombreCarpeta = limpiarNombreParaCarpeta(nombre);
             String nombreArchivo = limpiarNombreParaArchivo(nombre);
             campeon.setImagenPath("/img/" + nombreCarpeta + "/Original" + nombreArchivo + ".jpg");
         }
     }
-    
+
     private String limpiarNombreParaCarpeta(String nombre) {
-        // Para nombres de carpetas: mantener caracteres especiales pero reemplazar espacios con _
         return nombre.replace(" ", "_");
     }
-    
+
     private String limpiarNombreParaArchivo(String nombre) {
-        // Para nombres de archivos: casos especiales
         switch (nombre) {
             case "Aurelion Sol":
-                return "Aurelion Sol";  // Mantiene el espacio en el archivo
+                return "Aurelion Sol";
             case "Dr. Mundo":
-                return "Dr.Mundo";      // Sin espacio después del punto
+                return "Dr.Mundo";
             case "Nunu y Willump":
-                return "Nunu&Willump";  // Usa & en lugar de y
+                return "Nunu&Willump";
             default:
-                // Para otros casos, mantener caracteres especiales
                 return nombre;
         }
     }
-    
+
+    public Page<Campeon> findAllForAdminPaginated(Pageable pageable) {
+        return campeonRepository.findAllForAdminPaginated(pageable);
+    }
+
+    public Page<Campeon> findAllForAdminPaginatedNative(Pageable pageable) {
+        return campeonRepository.findAllForAdminPaginatedNative(pageable);
+    }
+
+    public List<Campeon> findAllForAdmin() {
+        return campeonRepository.findAllForAdmin();
+    }
+
+    public void activarCampeon(Integer id) {
+        campeonRepository.activarCampeon(id);
+    }
+
+    public void desactivarCampeon(Integer id) {
+        campeonRepository.desactivarCampeon(id);
+    }
+
     @PostConstruct
     public void inicializarDatos() {
-        // Solo verificar si hay datos, no insertar automáticamente
-        // Los datos se manejarán desde la base de datos existente
         long count = campeonRepository.count();
         System.out.println("Campeones en la base de datos: " + count);
     }
