@@ -2,8 +2,6 @@ package web.lol.web.model;
 
 import java.util.List;
 
-import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 

@@ -1,6 +1,5 @@
 package web.lol.web.controller;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.servlet.http.HttpSession;
-import web.lol.web.model.CategoriaRunas;
 import web.lol.web.model.Runas;
 import web.lol.web.service.ICategoriaRunasService;
 import web.lol.web.service.IRunasService;
