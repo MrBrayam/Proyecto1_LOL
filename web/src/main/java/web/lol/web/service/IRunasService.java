@@ -12,4 +12,7 @@ public interface IRunasService {
     Optional<Runas> buscarId(Integer id);
     void eliminar(Integer id);
     List<Runas> buscarPorCategoria(Integer idCategoria);
+    List<Runas> findAllForAdmin();
+    void activarRuna(Integer id);
+    void desactivarRuna(Integer id);
 }

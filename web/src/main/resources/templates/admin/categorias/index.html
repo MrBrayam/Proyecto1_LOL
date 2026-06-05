@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Administrar Categorías de Runas - League of Legends</title>
+    <link rel="icon" type="image/svg+xml" th:href="@{/favicon.svg}">
+    <link rel="shortcut icon" type="image/svg+xml" th:href="@{/favicon.svg}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/normalize.css?v=4.0}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/base.css?v=4.0}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin.css?v=4.0}">
+</head>
+<body class="admin-body">
+    <main>
+        <div class="admin-container">
+            <h1>Administrar Categorías de Runas</h1>
+
+            <div class="admin-nav">
+                <a th:href="@{/admin/categorias/form}" class="btn btn-primary">Agregar Nueva Categoría</a>
+                <a th:href="@{/admin/dashboard}" class="btn btn-secondary">Volver al Dashboard</a>
+            </div>
+
+            <div th:if="${mensaje}" class="alert alert-success">
+                <span th:text="${mensaje}">Mensaje</span>
+            </div>
+
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Color</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="cat : ${categorias}" th:class="${cat.estado == 0} ? 'campeon-inactivo' : ''">
+                        <td th:text="${cat.id_categoria}">ID</td>
+                        <td th:text="${cat.nombre_categoria}">Nombre</td>
+                        <td th:text="${cat.descripcion}">Descripción</td>
+                        <td th:text="${cat.color}" th:style="'color: ' + ${cat.color}">Color</td>
+                        <td>
+                            <span th:if="${cat.estado == 1}" class="estado-activo">Activo</span>
+                            <span th:if="${cat.estado == 0}" class="estado-inactivo">Inactivo</span>
+                        </td>
+                        <td>
+                            <a th:href="@{'/admin/categorias/editar/' + ${cat.id_categoria}}" class="btn btn-warning">Editar</a>
+                            <a th:if="${cat.estado == 1}" th:href="@{'/admin/categorias/desactivar/' + ${cat.id_categoria}}" class="btn btn-danger" onclick="return confirm('¿Desactivar esta categoría?')">Desactivar</a>
+                            <a th:if="${cat.estado == 0}" th:href="@{'/admin/categorias/activar/' + ${cat.id_categoria}}" class="btn btn-success" onclick="return confirm('¿Activar esta categoría?')">Activar</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div th:if="${#lists.isEmpty(categorias)}" class="no-data-message">
+                <p>No hay categorías registradas</p>
+                <a th:href="@{/admin/categorias/form}" class="btn btn-primary">Agregar la primera categoría</a>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

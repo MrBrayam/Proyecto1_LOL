@@ -12,4 +12,7 @@ public interface ICategoriaRunasService {
     Optional<CategoriaRunas> buscarId(Integer id);
     void eliminar(Integer id);
     Optional<CategoriaRunas> buscarPorNombre(String nombre);
+    List<CategoriaRunas> findAllForAdmin();
+    void activarCategoria(Integer id);
+    void desactivarCategoria(Integer id);
 }

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="${categoria.id_categoria != null ? 'Editar Categoría' : 'Nueva Categoría'}">Formulario Categoría</title>
+    <link rel="icon" type="image/svg+xml" th:href="@{/favicon.svg}">
+    <link rel="shortcut icon" type="image/svg+xml" th:href="@{/favicon.svg}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/normalize.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/base.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin.css}">
+</head>
+<body class="admin-form-container">
+    <main>
+        <div class="form-container">
+            <h1 th:text="${categoria.id_categoria != null ? 'Editar Categoría' : 'Nueva Categoría'}">Formulario Categoría</h1>
+
+            <form th:action="${categoria.id_categoria != null ? '/admin/categorias/update' : '/admin/categorias/create'}" method="post">
+                <input type="hidden" name="id_categoria" th:value="${categoria.id_categoria}">
+
+                <div class="form-group">
+                    <label for="nombre_categoria">Nombre de la Categoría: *</label>
+                    <input type="text" id="nombre_categoria" name="nombre_categoria" th:value="${categoria.nombre_categoria}" maxlength="50" required class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="descripcion">Descripción: *</label>
+                    <textarea id="descripcion" name="descripcion" maxlength="255" required class="form-control" th:text="${categoria.descripcion}"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="color">Color (hex): *</label>
+                    <input type="text" id="color" name="color" th:value="${categoria.color}" maxlength="7" required class="form-control" placeholder="Ej: #C8AA6E">
+                </div>
+
+                <div class="form-group">
+                    <label for="imagen_principal">URL Imagen Principal:</label>
+                    <input type="text" id="imagen_principal" name="imagen_principal" th:value="${categoria.imagen_principal}" class="form-control" placeholder="Ej: /img/1_Runas/Presicion/runas-precision-league-of-legends.jpg">
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary" th:text="${categoria.id_categoria != null ? 'Actualizar' : 'Crear'} + ' Categoría'">Guardar</button>
+                    <a th:href="@{/admin/categorias}" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </main>
+</body>
+</html>

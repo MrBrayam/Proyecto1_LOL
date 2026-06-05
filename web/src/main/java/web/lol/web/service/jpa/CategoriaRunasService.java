@@ -39,4 +39,16 @@ public class CategoriaRunasService implements ICategoriaRunasService {
     public Optional<CategoriaRunas> buscarPorNombre(String nombre) {
         return repoCategoria.findByNombreCategoriaIgnoreCase(nombre);
     }
+
+    public List<CategoriaRunas> findAllForAdmin() {
+        return repoCategoria.findAllForAdmin();
+    }
+
+    public void activarCategoria(Integer id) {
+        repoCategoria.activarCategoria(id);
+    }
+
+    public void desactivarCategoria(Integer id) {
+        repoCategoria.desactivarCategoria(id);
+    }
 }

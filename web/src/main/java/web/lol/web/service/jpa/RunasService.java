@@ -39,4 +39,16 @@ public class RunasService implements IRunasService {
     public List<Runas> buscarPorCategoria(Integer idCategoria) {
         return repoRunas.findByCategoriaId(idCategoria);
     }
+
+    public List<Runas> findAllForAdmin() {
+        return repoRunas.findAllForAdmin();
+    }
+
+    public void activarRuna(Integer id) {
+        repoRunas.activarRuna(id);
+    }
+
+    public void desactivarRuna(Integer id) {
+        repoRunas.desactivarRuna(id);
+    }
 }

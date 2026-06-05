@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="${runa.Id_runa != null ? 'Editar Runa' : 'Nueva Runa'}">Formulario Runa</title>
+    <link rel="icon" type="image/svg+xml" th:href="@{/favicon.svg}">
+    <link rel="shortcut icon" type="image/svg+xml" th:href="@{/favicon.svg}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/normalize.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/base.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin.css}">
+</head>
+<body class="admin-form-container">
+    <main>
+        <div class="form-container">
+            <h1 th:text="${runa.Id_runa != null ? 'Editar Runa' : 'Nueva Runa'}">Formulario Runa</h1>
+
+            <form th:action="${runa.Id_runa != null ? '/admin/runas/update' : '/admin/runas/create'}" method="post">
+                <input type="hidden" name="Id_runa" th:value="${runa.Id_runa}">
+
+                <div class="form-group">
+                    <label for="nombre_runa">Nombre de la Runa: *</label>
+                    <input type="text" id="nombre_runa" name="nombre_runa" th:value="${runa.nombre_runa}" maxlength="255" required class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="descripcion_runa">Descripción: *</label>
+                    <textarea id="descripcion_runa" name="descripcion_runa" maxlength="255" required class="form-control" th:text="${runa.descripcion_runa}"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="tipo_runa">Tipo de Runa: *</label>
+                    <select id="tipo_runa" name="tipo_runa" required class="form-control">
+                        <option value="">Seleccione un tipo</option>
+                        <option value="principal" th:selected="${runa.tipo_runa == 'principal'}">Principal</option>
+                        <option value="sub_runa_1" th:selected="${runa.tipo_runa == 'sub_runa_1'}">Sub runa 1</option>
+                        <option value="sub_runa_2" th:selected="${runa.tipo_runa == 'sub_runa_2'}">Sub runa 2</option>
+                        <option value="sub_runa_3" th:selected="${runa.tipo_runa == 'sub_runa_3'}">Sub runa 3</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="id_categoria">Categoría: *</label>
+                    <select id="id_categoria" name="id_categoria" required class="form-control">
+                        <option value="">Seleccione una categoría</option>
+                        <option th:each="cat : ${categorias}" th:value="${cat.id_categoria}" th:text="${cat.nombre_categoria}" th:selected="${runa.categoria?.id_categoria == cat.id_categoria}"></option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="url_img">URL de Imagen:</label>
+                    <input type="text" id="url_img" name="url_img" th:value="${runa.url_img}" class="form-control" placeholder="Ej: /img/1_Runas/Presicion/conqueror-55x.png">
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary" th:text="${runa.Id_runa != null ? 'Actualizar' : 'Crear'} + ' Runa'">Guardar</button>
+                    <a th:href="@{/admin/runas}" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </main>
+</body>
+</html>
