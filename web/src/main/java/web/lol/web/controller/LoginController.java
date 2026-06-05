@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/admin")
-public class AdminLoginController {
+public class LoginController {
     
     @Autowired
     private IAdminService adminService;

@@ -25,7 +25,7 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/admin/campeones")
-public class AdminCampeonController {
+public class CampeonController {
 
     @Autowired
     private ICampeonService campeonService;
