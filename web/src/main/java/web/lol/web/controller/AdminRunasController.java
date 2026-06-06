@@ -19,7 +19,7 @@ import web.lol.web.service.IRunasService;
 
 @Controller
 @RequestMapping("/admin/runas")
-public class RunasAdminController {
+public class AdminRunasController {
 
     @Autowired
     private IRunasService runasService;

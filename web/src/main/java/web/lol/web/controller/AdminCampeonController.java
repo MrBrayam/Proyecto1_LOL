@@ -21,7 +21,7 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/admin/campeones")
-public class CampeonAdminController {
+public class AdminCampeonController {
 
     @Autowired
     private ICampeonService campeonService;
@@ -34,8 +34,8 @@ public class CampeonAdminController {
 
     @GetMapping
     public String listarCampeones(Model model, HttpSession session,
-                                 @RequestParam(value = "page", defaultValue = "0") int page,
-                                 @RequestParam(value = "size", defaultValue = "10") int size) {
+    @RequestParam(value = "page", defaultValue = "0") int page,
+    @RequestParam(value = "size", defaultValue = "10") int size) {
         if (!verificarSesion(session)) {
             return "redirect:/admin/login";
         }

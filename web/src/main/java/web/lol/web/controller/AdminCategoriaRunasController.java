@@ -19,7 +19,7 @@ import web.lol.web.service.ICategoriaRunasService;
 
 @Controller
 @RequestMapping("/admin/categorias")
-public class CategoriaRunasAdminController {
+public class AdminCategoriaRunasController {
 
     @Autowired
     private ICategoriaRunasService categoriaService;

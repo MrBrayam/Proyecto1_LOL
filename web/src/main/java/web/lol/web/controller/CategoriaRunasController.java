@@ -25,7 +25,7 @@ public class CategoriaRunasController {
 
     @GetMapping("/categorias_runas")
     public List<CategoriaRunas> buscarTodos() {
-        return serviceCategoria.buscarTodos();
+        return serviceCategoria.buscarTodos();  
     }
 
     @PostMapping("/categorias_runas")
